@@ -4,13 +4,18 @@ import { CalendarHeart, Home, Images, Phone, UtensilsCrossed } from "lucide-reac
 import { useEffect, useState } from "react";
 import { SITE } from "@/lib/site";
 
-const items = [
+const items: {
+  to: "/" | "/carte" | "/reserver" | "/galerie" | "/contact";
+  label: string;
+  Icon: typeof Home;
+  cta?: boolean;
+}[] = [
   { to: "/", label: "Accueil", Icon: Home },
   { to: "/carte", label: "Carte", Icon: UtensilsCrossed },
   { to: "/reserver", label: "Réserver", Icon: CalendarHeart, cta: true },
   { to: "/galerie", label: "Galerie", Icon: Images },
   { to: "/contact", label: "Contact", Icon: Phone },
-] as const;
+];
 
 const langs = ["FR", "EN", "IT"] as const;
 
