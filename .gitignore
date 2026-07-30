@@ -25,6 +25,10 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Vercel : sortie de build (.vercel/output) et lien de projet
+# (.vercel/project.json contient les identifiants org/projet)
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

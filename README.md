@@ -1,6 +1,7 @@
 # Golden Tide
 
 # BRIEF DE CONCEPTION — Refonte Premium "L'Albatros" (Bonifacio)
+
 ### Niveau visé : Awwwards / Dribbble top-tier — Mobile-first — Glassmorphism paroxystique
 
 ---
@@ -8,6 +9,7 @@
 ## 1. CONTEXTE & CONTENU RÉEL INDEXÉ (site actuel)
 
 **Établissement**
+
 - Nom commercial : L'Albatros
 - Raison sociale : AUX PETITS GOURMETS (SASU) — SIREN 892139759 — RCS Ajaccio
 - Adresse restaurant : 47 Quai Comparetti, 20169 Bonifacio, Corse
@@ -17,6 +19,7 @@
 - Ouverture de saison annoncée : 1er avril
 
 **Positionnement / storytelling**
+
 - Restaurant sur le port de plaisance de Bonifacio, terrasse abritée face aux voiliers
 - Histoire depuis 2021, nouvelle direction en 2026
 - Décoration imaginée par **Marie-Claire Luciani**
@@ -25,6 +28,7 @@
 - Couleurs de marque évoquées dans les textes existants : **bleu et or** (mer + coucher de soleil sur la marina)
 
 **Spécialités mentionnées (à valoriser visuellement)**
+
 - Soupe de poissons de roche
 - Poisson frais de la pêche locale du jour
 - Bouillabaisse maison (sur commande, pour 2 personnes)
@@ -36,6 +40,7 @@
 - Moelleux à la châtaigne (dessert signature corse)
 
 **Problèmes identifiés sur le site actuel à corriger dans la refonte**
+
 1. Lien "La Carte" cassé — redirige vers la page d'accueil du prestataire WhatisEAT au lieu du vrai menu → **la nouvelle carte doit être hébergée nativement sur le site**, pas externalisée.
 2. Numéros de téléphone incohérents selon les pages → un seul numéro, partout, cliquable en `tel:`.
 3. Images sans texte alternatif → accessibilité et SEO à corriger.
@@ -49,6 +54,7 @@
 **Concept général** : "Nuit méditerranéenne sur la marina" — verre, lumière, profondeur, mouvement de l'eau.
 
 **Palette**
+
 - Bleu nuit profond (base) : `#0B1B2B` → `#0F2942`
 - Bleu marine translucide (glass) : `rgba(15, 41, 66, 0.45)`
 - Or / laiton (accent, CTA, détails) : `#C9A24B` → `#E8C874`
@@ -56,11 +62,13 @@
 - Touche corail/rosé discrète pour les CTA secondaires (coucher de soleil) : `#E8896B`
 
 **Typographie**
+
 - Titres : serif contemporaine élégante (ex. familles type "Fraunces", "Canela" ou équivalent variable font) — évoque le raffinement "brasserie chic"
 - Corps de texte : sans-serif géométrique très lisible (ex. "Inter", "General Sans") pour contraste net avec le serif
 - Hiérarchie stricte H1 > H2 > H3, jamais de saut de niveau (correction du défaut du site actuel)
 
 **Glassmorphism — règles précises**
+
 - `backdrop-filter: blur(20px) saturate(180%)`
 - Fond translucide : `background: rgba(255,255,255,0.08)` sur fond sombre, bordure `1px solid rgba(255,255,255,0.18)`
 - Ombre portée douce pour donner de la profondeur, jamais de flat design pur
@@ -73,6 +81,7 @@
 **Concept : "Ciel étoilé qui s'assemble en globe rotatif"**
 
 Séquence détaillée :
+
 - **T0 → T0.8s** : fond noir/bleu nuit profond, particules (étoiles) dispersées aléatoirement sur tout le viewport, forte luminosité, légère variation d'intensité (scintillement/twinkle) sur chaque particule, tailles variables (1-3px)
 - **T0.8s → T2.2s** : chaque particule interpole sa position (easing type `cubic-bezier(0.65, 0, 0.35, 1)`) vers un point calculé sur une sphère 3D virtuelle (répartition type Fibonacci sphere pour un semis homogène) → effet d'attraction gravitationnelle progressive, pas un simple fondu
 - **T2.2s → T3s** : le globe formé entame une rotation continue sur son axe Y (vitesse lente, ~20s/tour en régime établi), le logo "L'Albatros" apparaît en fondu au centre ou sous le globe
@@ -86,12 +95,14 @@ Séquence détaillée :
 ## 4. NAVIGATION — MOBILE FIRST
 
 **Mobile & tablette (< 1024px)**
+
 - Barre de navigation **fixe en bas d'écran**, flottante (pas collée aux bords, marge ~12px), glassmorphique au maximum (blur fort, bordure lumineuse fine dorée)
 - 4-5 icônes max : Accueil / Carte / Réserver (CTA central mis en valeur, légèrement surélevé façon "bouton flottant") / Galerie / Contact
 - Micro-animation au tap : scale + glow doré, transition fluide type spring (`cubic-bezier` ou vraie physique spring si framer-motion/GSAP)
 - Indicateur de section active animé (pas juste un changement de couleur statique — un liquide/blob qui glisse entre les icônes)
 
 **Desktop (≥ 1024px)**
+
 - Nav horizontale classique en haut, elle aussi glassmorphique au scroll (transparente en haut de page, devient glass au scroll avec `blur` progressif lié au scroll offset)
 
 ---
@@ -109,6 +120,7 @@ Séquence détaillée :
 ---
 
 ## 6. STACK TECHNIQUE RECOMMANDÉE
+
 - Framework : Next.js (SSR/SSG pour le SEO — critique, l'ancien site indexe mal)
 - Animations : Framer Motion (transitions de sections) + GSAP/ScrollTrigger (scroll storytelling) + Three.js ou Canvas custom (preloader globe)
 - Style : Tailwind CSS + variables CSS custom pour le design system glass
@@ -119,6 +131,7 @@ Séquence détaillée :
 ---
 
 ## 7. CE QUI FERA LA DIFFÉRENCE (niveau Awwwards)
+
 - Curseur custom sur desktop (magnétique sur les CTA)
 - Transitions de page fluides (pas de rechargement blanc entre les sections/routes)
 - Son ambiant discret optionnel (vagues/port), coupé par défaut, toggle visible
@@ -144,3 +157,42 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Configuration
+
+Le formulaire de réservation (`src/lib/reservation.ts`) envoie un e-mail via
+[Resend](https://resend.com). Copiez `.env.example` en `.env` et renseignez :
+
+| Variable                 | Rôle                                           |
+| ------------------------ | ---------------------------------------------- |
+| `RESEND_API_KEY`         | Clé API Resend                                 |
+| `RESERVATION_TO_EMAIL`   | Boîte qui reçoit les demandes                  |
+| `RESERVATION_FROM_EMAIL` | Expéditeur, sur un domaine vérifié dans Resend |
+
+Ces variables sont lues côté serveur uniquement : ne les préfixez pas par
+`VITE_`, ce préfixe exposerait la clé dans le bundle client. Sans elles, le
+formulaire affiche une erreur et renvoie vers le téléphone — il ne fait jamais
+croire à une réservation enregistrée.
+
+## Déploiement
+
+Le build cible la plateforme détectée automatiquement par Nitro : aucun preset
+à configurer. En local, sans variable de plateforme, il retombe sur
+`cloudflare-module` et écrit dans `.output/`.
+
+| Plateforme | Détection                          | Sortie                                  |
+| ---------- | ---------------------------------- | --------------------------------------- |
+| Vercel     | `VERCEL=1` (posé par la CI Vercel) | `.vercel/output/` (Build Output API v3) |
+| Lovable    | build interne                      | forcé sur Cloudflare                    |
+| Autre      | `NITRO_PRESET=<preset>`            | selon le preset                         |
+
+Pour vérifier la sortie Vercel en local :
+
+```bash
+VERCEL=1 npm run build
+```
+
+Sur Vercel, il faut créer le projet en le pointant sur **ce dépôt**, puis
+déclarer les trois variables ci-dessus dans _Settings → Environment Variables_.
+`vercel.json` force `framework: null` pour que Vercel n'applique pas le preset
+Vite et n'aille pas chercher un dossier `dist/` qui n'existe pas.
