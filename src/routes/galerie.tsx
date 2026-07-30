@@ -63,7 +63,7 @@ function GaleriePage() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto max-w-6xl px-5 pt-16">
+    <div className="mx-auto max-w-6xl px-5 pt-28 lg:pt-16">
       <Reveal>
         <p className="text-[11px] uppercase tracking-[0.36em] text-accent">En images</p>
         <h1 className="mt-4 font-display text-4xl sm:text-5xl">Galerie</h1>

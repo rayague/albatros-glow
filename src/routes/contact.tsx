@@ -24,7 +24,7 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 pt-16">
+    <div className="mx-auto max-w-6xl px-5 pt-28 lg:pt-16">
       <Reveal>
         <p className="text-[11px] uppercase tracking-[0.36em] text-accent">Nous trouver</p>
         <h1 className="mt-4 font-display text-4xl sm:text-5xl">Accès & contact</h1>

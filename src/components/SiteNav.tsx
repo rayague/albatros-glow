@@ -1,15 +1,17 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { CalendarHeart, Home, Images, Phone, UtensilsCrossed } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SITE } from "@/lib/site";
 
-const items: {
+type NavItem = {
   to: "/" | "/carte" | "/reserver" | "/galerie" | "/contact";
   label: string;
   Icon: typeof Home;
   cta?: boolean;
-}[] = [
+};
+
+const items: NavItem[] = [
   { to: "/", label: "Accueil", Icon: Home },
   { to: "/carte", label: "Carte", Icon: UtensilsCrossed },
   { to: "/reserver", label: "Réserver", Icon: CalendarHeart, cta: true },
@@ -18,11 +20,16 @@ const items: {
 ];
 
 const langs = ["FR", "EN", "IT"] as const;
+type Lang = (typeof langs)[number];
+
+const isActive = (to: NavItem["to"], pathname: string) =>
+  to === "/" ? pathname === "/" : pathname.startsWith(to);
 
 export function SiteNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState<(typeof langs)[number]>("FR");
+  const [lang, setLang] = useState<Lang>("FR");
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,17 +38,46 @@ export function SiteNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // -1 sur les pages hors dock (mentions légales) : le blob s'efface au lieu de
+  // désigner un onglet qui n'est pas la page courante.
+  const matchedIndex = items.findIndex((i) => isActive(i.to, pathname));
+  const activeIndex = matchedIndex === -1 ? 0 : matchedIndex;
+  const blobVisible = matchedIndex !== -1;
+
+  // Ressort volontairement peu amorti : le blob dépasse légèrement sa cible
+  // avant de se poser, ce qui donne la sensation "liquide" demandée.
+  const blobSpring = reduced
+    ? { duration: 0 }
+    : ({ type: "spring", stiffness: 380, damping: 30, mass: 0.9 } as const);
+
   return (
     <>
-      {/* Desktop */}
-      <header
-        className={`fixed inset-x-0 top-0 z-50 hidden transition-all duration-500 lg:block ${
-          scrolled ? "glass-strong border-b" : "border-b border-transparent bg-transparent"
-        }`}
+      <a
+        href="#contenu"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-primary focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-primary-foreground"
       >
+        Aller au contenu
+      </a>
+
+      {/* ─────────────  Desktop  ───────────── */}
+      {/*
+        Le verre vit dans un calque dédié dont on anime l'opacité, plutôt que
+        d'interpoler `backdrop-filter` de `none` à `blur(24px)` : le rayon de flou
+        variable force le compositeur à refaire la passe de blur à chaque frame
+        (coûteux sur mobile), là où une opacité reste purement compositée.
+        Le calque porte aussi la bordure, ce qui évite le décalage d'1px du
+        contenu quand `border-b` apparaissait au scroll.
+      */}
+      <header className="fixed inset-x-0 top-0 z-50 hidden lg:block">
+        <span
+          aria-hidden="true"
+          className={`glass-strong absolute inset-0 border-x-0 border-t-0 transition-opacity duration-500 ${
+            scrolled ? "opacity-100" : "opacity-0"
+          }`}
+        />
         <nav
           aria-label="Navigation principale"
-          className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4"
+          className="relative mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4"
         >
           <Link to="/" className="min-w-0">
             <span className="font-display text-xl tracking-[0.16em] text-gold-gradient">
@@ -63,7 +99,7 @@ export function SiteNav() {
                     className="relative block px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-foreground"
                   >
                     {label}
-                    {pathname === to && (
+                    {isActive(to, pathname) && (
                       <motion.span
                         layoutId="nav-underline"
                         className="hairline-gold absolute inset-x-3 -bottom-0.5 h-px"
@@ -75,26 +111,7 @@ export function SiteNav() {
           </ul>
 
           <div className="flex items-center gap-3">
-            <div
-              className="flex items-center gap-1 rounded-full border border-border p-0.5"
-              role="group"
-              aria-label="Langue du site"
-            >
-              {langs.map((l) => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  aria-pressed={lang === l}
-                  className={`rounded-full px-2 py-1 text-[11px] tracking-widest transition-colors ${
-                    lang === l
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {l}
-                </button>
-              ))}
-            </div>
+            <LangSwitch lang={lang} onChange={setLang} />
             <a
               href={SITE.phoneHref}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -103,6 +120,7 @@ export function SiteNav() {
             </a>
             <Link
               to="/reserver"
+              data-magnetic
               className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
             >
               Réserver
@@ -111,52 +129,153 @@ export function SiteNav() {
         </nav>
       </header>
 
-      {/* Mobile / tablette */}
+      {/* ─────────────  Mobile : barre de marque  ───────────── */}
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-40 lg:hidden">
+        <div className="pointer-events-auto relative mx-3 mt-3 rounded-2xl">
+          <span
+            aria-hidden="true"
+            className={`glass-dock edge-gold absolute inset-0 rounded-2xl transition-opacity duration-500 ${
+              scrolled ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <div className="relative flex items-center justify-between gap-3 px-4 py-2.5">
+            <Link to="/" className="min-w-0 leading-none" aria-label="L'Albatros — accueil">
+              <span className="font-display text-base tracking-[0.18em] text-gold-gradient">
+                L'ALBATROS
+              </span>
+              <span className="mt-1 block text-[8px] uppercase tracking-[0.34em] text-muted-foreground">
+                Bonifacio
+              </span>
+            </Link>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <LangSwitch lang={lang} onChange={setLang} compact />
+              <a
+                href={SITE.phoneHref}
+                aria-label={`Appeler le restaurant au ${SITE.phoneDisplay}`}
+                className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[color-mix(in_oklab,var(--gold)_12%,transparent)] text-accent transition-transform duration-300 active:scale-90"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ─────────────  Mobile : dock flottant  ───────────── */}
       <nav
         aria-label="Navigation principale"
-        className="glass-strong fixed inset-x-3 bottom-3 z-50 rounded-3xl px-2 py-2 lg:hidden"
-        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+        className="fixed inset-x-0 bottom-0 z-50 lg:hidden"
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
       >
-        <ul className="grid grid-cols-5 items-end">
-          {items.map(({ to, label, Icon, cta }) => {
-            const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
-            return (
-              <li key={to} className="flex justify-center">
-                <Link
-                  to={to}
-                  aria-label={label}
-                  aria-current={active ? "page" : undefined}
-                  className="group relative flex min-h-11 min-w-11 flex-col items-center justify-end gap-1 px-1 py-1"
-                >
-                  {active && !cta && (
-                    <motion.span
-                      layoutId="nav-blob"
-                      transition={{ type: "spring", stiffness: 420, damping: 32 }}
-                      className="absolute inset-x-1 bottom-0 top-0 -z-10 rounded-2xl border border-[color-mix(in_oklab,var(--gold)_45%,transparent)] bg-[color-mix(in_oklab,var(--gold)_14%,transparent)]"
-                    />
-                  )}
-                  <span
-                    className={`grid place-items-center rounded-2xl transition-all duration-300 active:scale-90 ${
-                      cta
-                        ? "-mt-7 h-14 w-14 bg-primary text-primary-foreground shadow-[0_10px_30px_-8px_color-mix(in_oklab,var(--gold)_70%,transparent)]"
-                        : `h-8 w-8 ${active ? "text-accent" : "text-muted-foreground"}`
-                    }`}
+        <div className="glass-dock edge-gold relative mx-4 rounded-[26px] pb-2 pt-2.5">
+          {/* Halo doré qui suit l'onglet actif, posé sous le verre. */}
+          <motion.span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-0 w-1/5"
+            animate={{ x: `${activeIndex * 100}%`, opacity: blobVisible ? 1 : 0 }}
+            transition={blobSpring}
+          >
+            <span className="absolute inset-x-2 -bottom-2 top-1 rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--gold)_55%,transparent),transparent_70%)] blur-lg" />
+          </motion.span>
+
+          {/* Le blob liquide lui-même. */}
+          <motion.span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-1.5 left-0 w-1/5 px-1.5"
+            animate={{ x: `${activeIndex * 100}%`, opacity: blobVisible ? 1 : 0 }}
+            transition={blobSpring}
+          >
+            <span className="block h-full w-full rounded-[19px] border border-[color-mix(in_oklab,var(--gold)_42%,transparent)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--gold)_20%,transparent),color-mix(in_oklab,var(--gold)_7%,transparent))]" />
+          </motion.span>
+
+          <ul className="relative grid grid-cols-5">
+            {items.map(({ to, label, Icon, cta }) => {
+              const active = isActive(to, pathname);
+              return (
+                <li key={to} className="flex justify-center">
+                  <Link
+                    to={to}
+                    aria-current={active ? "page" : undefined}
+                    className="group flex min-h-11 w-full flex-col items-center justify-end gap-1.5 px-0.5 pb-0.5 pt-1"
                   >
-                    <Icon className={cta ? "h-6 w-6" : "h-5 w-5"} aria-hidden="true" />
-                  </span>
-                  <span
-                    className={`text-[10px] tracking-wide ${
-                      active ? "text-foreground" : "text-muted-foreground"
-                    }`}
-                  >
-                    {label}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                    {/*
+                      Le CTA occupe la même boîte de 32px que les autres icônes ; le disque
+                      doré est sorti du flux en absolu pour déborder au-dessus du dock sans
+                      déformer la grille (une marge négative serait réabsorbée par le
+                      `justify-end` du lien).
+                    */}
+                    <span
+                      className={
+                        cta
+                          ? "relative grid h-8 w-8 place-items-center"
+                          : `grid h-8 w-8 place-items-center transition-[color,transform] duration-300 group-active:scale-90 ${
+                              active ? "text-accent" : "text-dock-label"
+                            }`
+                      }
+                    >
+                      {cta ? (
+                        <span className="absolute -top-8 grid h-14 w-14 place-items-center rounded-full bg-[image:var(--gradient-gold)] text-primary-foreground shadow-[0_12px_28px_-8px_color-mix(in_oklab,var(--gold)_85%,transparent),inset_0_1px_0_rgba(255,255,255,0.55)] ring-[3px] ring-[color-mix(in_oklab,var(--abyss)_70%,transparent)] transition-transform duration-300 group-active:scale-90">
+                          <Icon className="h-6 w-6" strokeWidth={1.9} aria-hidden="true" />
+                        </span>
+                      ) : (
+                        <Icon
+                          className="h-[1.15rem] w-[1.15rem]"
+                          strokeWidth={active ? 2.2 : 1.75}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </span>
+                    <span
+                      className={`text-[10px] leading-none tracking-[0.02em] transition-colors duration-300 ${
+                        active ? "text-foreground" : "text-dock-label"
+                      }`}
+                    >
+                      {label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </nav>
     </>
+  );
+}
+
+function LangSwitch({
+  lang,
+  onChange,
+  compact = false,
+}: {
+  lang: Lang;
+  onChange: (l: Lang) => void;
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className="flex items-center gap-0.5 rounded-full border border-border p-0.5"
+      role="group"
+      aria-label="Langue du site"
+    >
+      {langs.map((l) => (
+        <button
+          key={l}
+          type="button"
+          onClick={() => onChange(l)}
+          aria-pressed={lang === l}
+          className={`rounded-full tracking-widest transition-colors ${
+            compact ? "px-1.5 py-1 text-[10px]" : "px-2 py-1 text-[11px]"
+          } ${
+            lang === l
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
   );
 }

@@ -36,11 +36,13 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-text: var(--destructive-text);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
 
+  --color-dock-label: var(--dock-label);
   --color-abyss: var(--abyss);
   --color-marine: var(--marine);
   --color-gold: var(--gold);
@@ -53,12 +55,12 @@
   --radius: 0.75rem;
 
   /* Palette de marque */
-  --abyss: oklch(0.19 0.045 250);      /* #0B1B2B */
-  --marine: oklch(0.28 0.06 249);      /* #0F2942 */
-  --gold: oklch(0.72 0.11 84);         /* #C9A24B */
-  --gold-light: oklch(0.85 0.09 88);   /* #E8C874 */
-  --coral: oklch(0.71 0.11 40);        /* #E8896B */
-  --ivory: oklch(0.96 0.014 90);       /* #F5F2EA */
+  --abyss: oklch(0.19 0.045 250); /* #0B1B2B */
+  --marine: oklch(0.28 0.06 249); /* #0F2942 */
+  --gold: oklch(0.72 0.11 84); /* #C9A24B */
+  --gold-light: oklch(0.85 0.09 88); /* #E8C874 */
+  --coral: oklch(0.71 0.11 40); /* #E8896B */
+  --ivory: oklch(0.96 0.014 90); /* #F5F2EA */
 
   --background: var(--abyss);
   --foreground: var(--ivory);
@@ -76,6 +78,13 @@
   --accent-foreground: oklch(0.16 0.04 250);
   --destructive: oklch(0.58 0.2 27);
   --destructive-foreground: var(--ivory);
+  /*
+   * --destructive plafonne à 3.28:1 sur les panneaux sombres : insuffisant pour
+   * du texte (AA exige 4.5:1). Cette variante éclaircie tient 5.02:1 sur
+   * `panel-readable` et 4.65:1 sur l'encart d'alerte, et sert donc aux messages
+   * d'erreur, tandis que --destructive reste pour les bordures et fonds.
+   */
+  --destructive-text: oklch(0.68 0.16 27);
   --border: oklch(1 0 0 / 16%);
   --input: oklch(1 0 0 / 18%);
   --ring: var(--gold);
@@ -83,6 +92,15 @@
   /* Surfaces glass */
   --glass-bg: rgba(255, 255, 255, 0.08);
   --glass-bg-strong: rgba(15, 41, 66, 0.55);
+
+  /*
+   * Le dock flotte au-dessus de photos (galerie) dont les zones claires peuvent
+   * remonter derrière le verre. 0.76 est l'opacité minimale du voile qui garde
+   * les libellés à 4.5:1 (AA) même sur un fond blanc, tout en laissant 24 % de
+   * transparence — d'où aussi --dock-label, plus clair que --muted-foreground.
+   */
+  --dock-veil: rgba(11, 27, 43, 0.76);
+  --dock-label: oklch(0.87 0.02 90);
   --glass-border: rgba(255, 255, 255, 0.18);
   --glass-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
   --gradient-gold: linear-gradient(120deg, var(--gold), var(--gold-light));
@@ -91,6 +109,7 @@
 
 @utility glass {
   background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
@@ -98,9 +117,57 @@
 
 @utility glass-strong {
   background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+}
+
+/*
+ * Verre "épais" pour les surfaces flottantes (dock mobile, barre de titre).
+ * Trois couches empilées : un dégradé spéculaire qui simule la réfraction en haut
+ * à gauche, un voile marine pour la lisibilité, puis des ombres internes qui
+ * donnent l'épaisseur (biseau clair en haut, ombre en bas).
+ */
+@utility glass-dock {
+  background:
+    linear-gradient(
+      152deg,
+      rgba(255, 255, 255, 0.11),
+      rgba(255, 255, 255, 0.03) 44%,
+      rgba(255, 255, 255, 0.06)
+    ),
+    var(--dock-veil);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 26px 50px -18px rgba(0, 0, 0, 0.85),
+    0 4px 14px -6px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* Filet de lumière dorée posé sur l'arête haute d'une surface en verre. */
+@utility edge-gold {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline: 14%;
+    top: 0;
+    height: 1px;
+    border-radius: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--gold-light) 85%, transparent),
+      transparent
+    );
+    opacity: 0.75;
+    pointer-events: none;
+  }
 }
 
 /* Bloc lisible : opacité suffisante pour le contraste AA sur texte long */
@@ -136,11 +203,24 @@
   }
 
   body {
-    background: var(--gradient-abyss);
-    background-attachment: fixed;
+    background: var(--abyss);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * Le dégradé vit dans une couche fixe plutôt que via `background-attachment: fixed`,
+   * que Safari iOS repeint à chaque frame de scroll (jank très visible derrière
+   * les surfaces en backdrop-filter).
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--gradient-abyss);
+    pointer-events: none;
   }
 
   h1,

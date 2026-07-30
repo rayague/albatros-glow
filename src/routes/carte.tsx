@@ -28,7 +28,7 @@ function CartePage() {
   const items = filter === "Tout" ? MENU : MENU.filter((m) => m.category === filter);
 
   return (
-    <div className="mx-auto max-w-4xl px-5 pt-16">
+    <div className="mx-auto max-w-4xl px-5 pt-28 lg:pt-16">
       <Reveal>
         <p className="text-[11px] uppercase tracking-[0.36em] text-accent">Cuisine du marché</p>
         <h1 className="mt-4 font-display text-4xl sm:text-5xl">La Carte</h1>
@@ -48,7 +48,7 @@ function CartePage() {
             key={c}
             onClick={() => setFilter(c)}
             aria-pressed={filter === c}
-            className={`relative min-h-11 rounded-full px-5 text-sm transition-colors ${
+            className={`relative inline-flex min-h-11 items-center rounded-full px-5 text-sm transition-colors ${
               filter === c
                 ? "bg-primary text-primary-foreground"
                 : "glass text-muted-foreground hover:text-foreground"

@@ -22,7 +22,7 @@ export const Route = createFileRoute("/mentions-legales")({
 
 function LegalPage() {
   return (
-    <div className="mx-auto max-w-3xl px-5 pt-16">
+    <div className="mx-auto max-w-3xl px-5 pt-28 lg:pt-16">
       <h1 className="font-display text-4xl">Mentions légales & RGPD</h1>
 
       <section className="mt-10">

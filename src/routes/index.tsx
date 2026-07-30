@@ -207,7 +207,7 @@ function Index() {
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {TEAM.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08}>
-              <article className="glass h-full rounded-3xl p-7 transition-all duration-500 hover:-translate-y-1.5">
+              <article className="glass h-full rounded-3xl p-7 transition-transform duration-500 hover:-translate-y-1.5">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-accent">{p.role}</p>
                 <h3 className="mt-3 font-display text-2xl">{p.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.text}</p>

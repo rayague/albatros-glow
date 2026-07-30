@@ -7,7 +7,8 @@ export const SITE = {
   hours: "Service continu 11h00 – 23h00, 7j/7",
   season: "Ouverture de saison le 1er avril",
   instagram: "https://www.instagram.com/restaurantlalbatrosbonifacio/",
-  facebook: "https://www.facebook.com/",
+  // Pas de `facebook` ici tant que l'URL exacte de la page n'est pas confirmée :
+  // l'ancien site pointait vers la racine facebook.com, ce qui menait nulle part.
   maps: "https://www.google.com/maps/search/?api=1&query=47+Quai+Comparetti+20169+Bonifacio",
 } as const;
 

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, MapPin, Phone } from "lucide-react";
+import { Instagram, MapPin, Phone } from "lucide-react";
 import { SITE } from "@/lib/site";
 
 export function SiteFooter() {
@@ -64,7 +64,9 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Suivez-nous</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+            Suivez-nous
+          </h2>
           <div className="mt-3 flex gap-3">
             <a
               href={SITE.instagram}
@@ -74,15 +76,6 @@ export function SiteFooter() {
               className="glass grid h-11 w-11 place-items-center rounded-full text-foreground transition-transform hover:scale-105"
             >
               <Instagram className="h-5 w-5" aria-hidden="true" />
-            </a>
-            <a
-              href={SITE.facebook}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook de L'Albatros"
-              className="glass grid h-11 w-11 place-items-center rounded-full text-foreground transition-transform hover:scale-105"
-            >
-              <Facebook className="h-5 w-5" aria-hidden="true" />
             </a>
           </div>
           <p className="mt-5 text-xs leading-relaxed text-muted-foreground">{SITE.legal}</p>
