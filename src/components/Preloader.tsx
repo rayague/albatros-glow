@@ -22,13 +22,24 @@ export function Preloader({ onDone }: { onDone: () => void }) {
   const finish = () => {
     if (finished.current) return;
     finished.current = true;
+    try {
+      sessionStorage.setItem("albatros-intro", "1");
+    } catch {
+      /* stockage indisponible */
+    }
     setLeaving(true);
     window.setTimeout(onDone, 700);
   };
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem("albatros-intro") === "1";
+    } catch {
+      /* stockage indisponible */
+    }
+    if (reduced || seen) {
       finish();
       return;
     }
