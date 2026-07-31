@@ -101,6 +101,15 @@
    */
   --dock-veil: rgba(11, 27, 43, 0.76);
   --dock-label: oklch(0.87 0.02 90);
+
+  /*
+   * Place occupée par les deux barres fixes du mobile, marges comprises.
+   * Tout contenu en pleine hauteur doit réserver ces espaces, sinon il passe
+   * dessous : la barre de marque mesure 12px de marge + 60px, le dock 74px +
+   * 12px + la zone sûre iOS.
+   */
+  --topbar-space: 5.5rem;
+  --dock-space: calc(6.25rem + env(safe-area-inset-bottom));
   --glass-border: rgba(255, 255, 255, 0.18);
   --glass-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
   --gradient-gold: linear-gradient(120deg, var(--gold), var(--gold-light));

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 import heroImg from "@/assets/hero-marina.jpg";
@@ -61,6 +61,30 @@ const photos = [
 
 function GaleriePage() {
   const [open, setOpen] = useState<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+
+  // Comportements attendus d'un `aria-modal` : fermeture au clavier, arrière-plan
+  // figé (sinon la page défile derrière la photo au doigt), et focus déplacé
+  // dans la boîte de dialogue puis rendu au déclencheur.
+  useEffect(() => {
+    if (open === null) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
+    };
+    document.addEventListener("keydown", onKey);
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+      openerRef.current?.focus();
+    };
+  }, [open]);
 
   return (
     <div className="mx-auto max-w-6xl px-5 pt-28 lg:pt-16">
@@ -74,7 +98,10 @@ function GaleriePage() {
           <motion.button
             key={p.alt}
             layoutId={`photo-${i}`}
-            onClick={() => setOpen(i)}
+            onClick={(e) => {
+              openerRef.current = e.currentTarget;
+              setOpen(i);
+            }}
             className={`group relative overflow-hidden rounded-3xl border border-border ${p.span}`}
             aria-label={`Agrandir : ${p.alt}`}
           >
@@ -103,13 +130,16 @@ function GaleriePage() {
             aria-modal="true"
             aria-label="Photo agrandie"
           >
+            {/* Le clic sur la photo ne doit pas remonter au fond, qui ferme. */}
             <motion.img
               layoutId={`photo-${open}`}
               src={photos[open].src}
               alt={photos[open].alt}
+              onClick={(e) => e.stopPropagation()}
               className="max-h-[80dvh] w-auto max-w-full rounded-3xl border border-border object-contain"
             />
             <button
+              ref={closeRef}
               onClick={() => setOpen(null)}
               aria-label="Fermer la photo"
               className="glass absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full"

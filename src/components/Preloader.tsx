@@ -19,13 +19,19 @@ export function Preloader({ onDone }: { onDone: () => void }) {
   const [skippable, setSkippable] = useState(false);
   const finished = useRef(false);
 
-  const finish = () => {
+  const finish = (immediate = false) => {
     if (finished.current) return;
     finished.current = true;
     try {
       sessionStorage.setItem("albatros-intro", "1");
     } catch {
       /* stockage indisponible */
+    }
+    // Rien à faire disparaître si l'intro n'a jamais été jouée : enchaîner la
+    // sortie ferait patienter 700 ms devant un écran noir.
+    if (immediate) {
+      onDone();
+      return;
     }
     setLeaving(true);
     window.setTimeout(onDone, 700);
@@ -40,7 +46,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       /* stockage indisponible */
     }
     if (reduced || seen) {
-      finish();
+      finish(true);
       return;
     }
 
@@ -102,7 +108,8 @@ export function Preloader({ onDone }: { onDone: () => void }) {
 
       const p = Math.min(1, Math.max(0, (t - 0.8) / 1.4));
       const e = easeInOut(p);
-      const rot = t > 2.0 ? (t - 2.0) * 0.55 : 0;
+      // 2π/20 rad·s⁻¹ : un tour en 20 s, la vitesse de régime prévue au brief.
+      const rot = t > 2.0 ? (t - 2.0) * 0.314 : 0;
 
       for (const s of stars) {
         const cos = Math.cos(rot);
@@ -166,7 +173,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       </div>
       {skippable && !leaving && (
         <button
-          onClick={finish}
+          onClick={() => finish()}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full border border-border px-4 py-2 text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
         >
           Entrer

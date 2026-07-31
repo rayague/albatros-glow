@@ -52,21 +52,31 @@ function Index() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,27,43,0.75),rgba(11,27,43,0.55)_40%,var(--abyss))]" />
 
+        {/*
+          Les paddings réservent la place des barres fixes mobiles : sans eux le
+          contenu du hero passe dessous et devient illisible sur les petits
+          écrans. Sur desktop c'est <main> qui gère l'espace de la nav haute.
+        */}
         <motion.div
           style={{ opacity: fade }}
-          className="relative mx-auto flex min-h-[92dvh] max-w-5xl flex-col items-center justify-center px-5 pb-28 text-center"
+          className="relative mx-auto flex min-h-[92dvh] max-w-5xl flex-col items-center justify-center px-5 pb-[var(--dock-space)] pt-[var(--topbar-space)] text-center lg:pb-28 lg:pt-0"
         >
-          <p className="text-[11px] uppercase tracking-[0.42em] text-accent">
+          <p className="text-[10px] uppercase tracking-[0.36em] text-accent sm:text-[11px] sm:tracking-[0.42em]">
             47 Quai Comparetti · Bonifacio
           </p>
-          <h1 className="mt-5 font-display text-4xl leading-[1.05] sm:text-6xl lg:text-7xl">
+          {/*
+            Taille fluide bornée par la largeur ET la hauteur : un palier basé
+            sur la seule largeur donnait un titre de 60px sur un téléphone en
+            paysage (740x360), qui poussait les CTA sous le dock.
+          */}
+          <h1 className="mt-3 font-display text-[clamp(1.7rem,min(9vw,9vh),4.5rem)] leading-[1.08] sm:mt-5">
             <SplitText text="La Méditerranée, servie face aux voiliers" />
           </h1>
-          <p className="mt-6 max-w-xl text-balance text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="mt-4 max-w-xl text-balance text-sm leading-relaxed text-muted-foreground [@media(max-height:480px)]:hidden sm:mt-6 sm:text-base">
             Brasserie chic sur le port de plaisance. Pêche locale du jour, produits frais et
             circuits courts, sous la direction du Chef Omar.
           </p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-9">
             <Link
               to="/reserver"
               data-magnetic
@@ -84,16 +94,22 @@ function Index() {
             </Link>
           </div>
 
-          <div className="glass mt-12 grid w-full max-w-2xl grid-cols-1 gap-3 rounded-2xl px-5 py-4 text-sm sm:grid-cols-3">
+          {/*
+            Sur mobile on ne garde que les horaires : le téléphone est déjà un
+            bouton d'appel dans la barre de marque, et le lieu est annoncé juste
+            au-dessus. Empilées, ces trois lignes coûtaient 118px de hauteur pour
+            de l'information redondante.
+          */}
+          <div className="glass mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 rounded-2xl px-5 py-3 text-sm max-lg:[@media(max-height:620px)]:hidden sm:mt-12 sm:grid-cols-3 sm:py-4">
             <p className="flex items-center justify-center gap-2">
               <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
               11h – 23h, 7j/7
             </p>
-            <a href={SITE.phoneHref} className="flex items-center justify-center gap-2">
+            <a href={SITE.phoneHref} className="hidden items-center justify-center gap-2 sm:flex">
               <Phone className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
               {SITE.phoneDisplay}
             </a>
-            <p className="flex items-center justify-center gap-2">
+            <p className="hidden items-center justify-center gap-2 sm:flex">
               <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
               Port de Bonifacio
             </p>
@@ -180,8 +196,18 @@ function Index() {
       {/* IMAGES */}
       <section className="mx-auto grid max-w-6xl gap-5 px-5 py-8 sm:grid-cols-2">
         {[
-          { src: dishImg, alt: "Poisson de roche servi en soupe safranée, assiette à filet doré", w: 1024, h: 1280 },
-          { src: langousteImg, alt: "Plateau de langoustes et fruits de mer grillés", w: 1024, h: 1024 },
+          {
+            src: dishImg,
+            alt: "Poisson de roche servi en soupe safranée, assiette à filet doré",
+            w: 1024,
+            h: 1280,
+          },
+          {
+            src: langousteImg,
+            alt: "Plateau de langoustes et fruits de mer grillés",
+            w: 1024,
+            h: 1024,
+          },
         ].map((img) => (
           <Reveal key={img.alt}>
             <div className="overflow-hidden rounded-3xl border border-border">
