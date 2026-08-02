@@ -5,6 +5,8 @@ import { ArrowRight, Clock, MapPin, Phone } from "lucide-react";
 
 import heroImg from "@/assets/hero-marina.jpg";
 import terrasseImg from "@/assets/terrasse.jpg";
+import dishImg from "@/assets/dish-poisson.jpg";
+import langousteImg from "@/assets/langouste.jpg";
 import { Reveal, SplitText } from "@/components/Reveal";
 import { MENU, SITE, TEAM } from "@/lib/site";
 
@@ -184,7 +186,7 @@ function Index() {
           <Link
             to="/carte"
             data-magnetic
-            className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
+            className="inline-flex min-h-11 items-center gap-2 text-sm text-accent hover:underline"
           >
             Voir toute la carte <ArrowRight className="h-4 w-4" />
           </Link>
@@ -192,27 +194,55 @@ function Index() {
       </section>
 
       {/*
-        Renvoi vers la galerie, sans vignettes : cette bande reprenait
-        telles quelles deux photos de la page Galerie, sans texte ni rôle
-        narratif. Les assiettes lui restent donc exclusives.
+        Aperçu de la galerie. Ces deux assiettes y figurent aussi : la
+        répétition est assumée le temps d'avoir plus de visuels, et le titre
+        plus le lien la présentent comme un extrait — l'ancienne bande n'avait
+        ni l'un ni l'autre et passait pour du remplissage.
       */}
       <section className="mx-auto max-w-6xl px-5 py-8">
         <Reveal>
+          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">En images</p>
+          <h2 className="mt-4 font-display text-3xl sm:text-4xl">La maison en images</h2>
+        </Reveal>
+
+        <div className="mt-8 grid gap-5 sm:grid-cols-2">
+          {[
+            {
+              src: dishImg,
+              alt: "Poisson de roche servi en soupe safranée, assiette à filet doré",
+              w: 1024,
+              h: 1280,
+            },
+            {
+              src: langousteImg,
+              alt: "Plateau de langoustes et fruits de mer grillés",
+              w: 1024,
+              h: 1024,
+            },
+          ].map((img) => (
+            <Reveal key={img.alt}>
+              <div className="overflow-hidden rounded-3xl border border-border">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  width={img.w}
+                  height={img.h}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-[1.2s] hover:scale-105"
+                />
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.1} className="mt-8">
           <Link
             to="/galerie"
             data-magnetic
-            className="glass group flex items-center justify-between gap-5 rounded-3xl px-6 py-6 transition-transform duration-500 hover:-translate-y-1"
+            className="inline-flex min-h-11 items-center gap-2 text-sm text-accent hover:underline"
           >
-            <span className="min-w-0">
-              <span className="block font-display text-xl sm:text-2xl">La maison en images</span>
-              <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">
-                La terrasse, le port au crépuscule, les assiettes du jour.
-              </span>
-            </span>
-            <ArrowRight
-              className="h-5 w-5 shrink-0 text-accent transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
+            Voir toute la galerie <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </Reveal>
       </section>
