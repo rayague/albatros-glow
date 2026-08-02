@@ -77,19 +77,31 @@ function ContactPage() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="relative overflow-hidden rounded-3xl border border-border">
-            <iframe
-              title="Carte de localisation de L'Albatros, 47 Quai Comparetti à Bonifacio"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=9.152%2C41.385%2C9.164%2C41.392&layer=mapnik&marker=41.3885%2C9.1585"
-              className="h-[380px] w-full lg:h-full"
-              style={{ filter: "invert(0.92) hue-rotate(180deg) saturate(0.75) brightness(0.95)" }}
-              loading="lazy"
-            />
-            <div className="glass pointer-events-none absolute bottom-4 left-4 rounded-2xl px-4 py-3">
-              <p className="font-display text-lg">L'Albatros</p>
-              <p className="text-xs text-muted-foreground">Quai Comparetti — port de plaisance</p>
+          <section aria-labelledby="titre-plan" className="h-full">
+            <h2 id="titre-plan" className="sr-only">
+              Plan d'accès
+            </h2>
+            <div className="relative h-full overflow-hidden rounded-3xl border border-border">
+              <iframe
+                title="Carte de localisation de L'Albatros, 47 Quai Comparetti à Bonifacio"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=9.152%2C41.385%2C9.164%2C41.392&layer=mapnik&marker=41.3885%2C9.1585"
+                className="h-[380px] w-full lg:h-full"
+                style={{
+                  filter: "invert(0.92) hue-rotate(180deg) saturate(0.75) brightness(0.95)",
+                }}
+                loading="lazy"
+              />
+              {/*
+                L'encart est ancré en haut à gauche : en bas, il recouvrait
+                l'attribution OpenStreetMap sur les écrans étroits, alors que
+                la licence ODbL impose de la laisser visible.
+              */}
+              <div className="glass pointer-events-none absolute left-4 top-4 max-w-[70%] rounded-2xl px-4 py-3">
+                <p className="font-display text-lg">L'Albatros</p>
+                <p className="text-xs text-muted-foreground">Quai Comparetti — port de plaisance</p>
+              </div>
             </div>
-          </div>
+          </section>
         </Reveal>
       </div>
     </div>
