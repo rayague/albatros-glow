@@ -5,8 +5,6 @@ import { ArrowRight, Clock, MapPin, Phone } from "lucide-react";
 
 import heroImg from "@/assets/hero-marina.jpg";
 import terrasseImg from "@/assets/terrasse.jpg";
-import dishImg from "@/assets/dish-poisson.jpg";
-import langousteImg from "@/assets/langouste.jpg";
 import { Reveal, SplitText } from "@/components/Reveal";
 import { MENU, SITE, TEAM } from "@/lib/site";
 
@@ -193,35 +191,30 @@ function Index() {
         </Reveal>
       </section>
 
-      {/* IMAGES */}
-      <section className="mx-auto grid max-w-6xl gap-5 px-5 py-8 sm:grid-cols-2">
-        {[
-          {
-            src: dishImg,
-            alt: "Poisson de roche servi en soupe safranée, assiette à filet doré",
-            w: 1024,
-            h: 1280,
-          },
-          {
-            src: langousteImg,
-            alt: "Plateau de langoustes et fruits de mer grillés",
-            w: 1024,
-            h: 1024,
-          },
-        ].map((img) => (
-          <Reveal key={img.alt}>
-            <div className="overflow-hidden rounded-3xl border border-border">
-              <img
-                src={img.src}
-                alt={img.alt}
-                width={img.w}
-                height={img.h}
-                loading="lazy"
-                className="aspect-[4/3] w-full object-cover transition-transform duration-[1.2s] hover:scale-105"
-              />
-            </div>
-          </Reveal>
-        ))}
+      {/*
+        Renvoi vers la galerie, sans vignettes : cette bande reprenait
+        telles quelles deux photos de la page Galerie, sans texte ni rôle
+        narratif. Les assiettes lui restent donc exclusives.
+      */}
+      <section className="mx-auto max-w-6xl px-5 py-8">
+        <Reveal>
+          <Link
+            to="/galerie"
+            data-magnetic
+            className="glass group flex items-center justify-between gap-5 rounded-3xl px-6 py-6 transition-transform duration-500 hover:-translate-y-1"
+          >
+            <span className="min-w-0">
+              <span className="block font-display text-xl sm:text-2xl">La maison en images</span>
+              <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">
+                La terrasse, le port au crépuscule, les assiettes du jour.
+              </span>
+            </span>
+            <ArrowRight
+              className="h-5 w-5 shrink-0 text-accent transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </Link>
+        </Reveal>
       </section>
 
       {/* EQUIPE */}
