@@ -50,7 +50,13 @@ function Index() {
           style={{ y }}
           className="absolute inset-0 h-[115%] w-full object-cover"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,27,43,0.75),rgba(11,27,43,0.55)_40%,var(--abyss))]" />
+        {/*
+          Eau profonde en haut, lumière du lagon en bas : le voile porte le texte
+          clair du hero puis se dissout dans le fond nacré de la page. Un voile
+          clair a été écarté — sur cette photo de nuit, il faudrait 0.94 d'opacité
+          pour tenir le contraste, ce qui effacerait l'image.
+        */}
+        <div className="absolute inset-0 bg-[image:var(--gradient-dive)]" />
 
         {/*
           Les paddings réservent la place des barres fixes mobiles : sans eux le
@@ -61,7 +67,12 @@ function Index() {
           style={{ opacity: fade }}
           className="relative mx-auto flex min-h-[92dvh] max-w-5xl flex-col items-center justify-center px-5 pb-[var(--dock-space)] pt-[var(--topbar-space)] text-center lg:pb-28 lg:pt-0"
         >
-          <p className="text-[10px] uppercase tracking-[0.36em] text-accent sm:text-[11px] sm:tracking-[0.42em]">
+          {/*
+            Le hero est la seule surface sombre du site : ses textes portent donc
+            des couleurs claires explicites, au lieu des tokens `accent` et
+            `muted-foreground` qui sont sombres depuis le passage en palette claire.
+          */}
+          <p className="text-[10px] uppercase tracking-[0.36em] text-sand sm:text-[11px] sm:tracking-[0.42em]">
             47 Quai Comparetti · Bonifacio
           </p>
           {/*
@@ -69,10 +80,10 @@ function Index() {
             sur la seule largeur donnait un titre de 60px sur un téléphone en
             paysage (740x360), qui poussait les CTA sous le dock.
           */}
-          <h1 className="mt-3 font-display text-[clamp(1.7rem,min(9vw,9vh),4.5rem)] leading-[1.08] sm:mt-5">
+          <h1 className="mt-3 font-display text-[clamp(1.7rem,min(9vw,9vh),4.5rem)] leading-[1.08] text-shell sm:mt-5">
             <SplitText text="La Méditerranée, servie face aux voiliers" />
           </h1>
-          <p className="mt-4 max-w-xl text-balance text-sm leading-relaxed text-muted-foreground [@media(max-height:480px)]:hidden sm:mt-6 sm:text-base">
+          <p className="mt-4 max-w-xl text-balance text-sm leading-relaxed text-foam [@media(max-height:480px)]:hidden sm:mt-6 sm:text-base">
             Brasserie chic sur le port de plaisance. Pêche locale du jour, produits frais et
             circuits courts, sous la direction du Chef Omar.
           </p>
@@ -80,7 +91,7 @@ function Index() {
             <Link
               to="/reserver"
               data-magnetic
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
+              className="group inline-flex items-center gap-2 rounded-full bg-lagoon px-7 py-3.5 text-sm font-medium text-ink transition-transform duration-300 hover:scale-[1.04]"
             >
               Réserver une table
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

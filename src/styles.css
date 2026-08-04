@@ -4,8 +4,10 @@
 
 /*
  * L'Albatros — Bonifacio
- * Design system : "Nuit méditerranéenne sur la marina"
- * Bleu nuit profond + or/laiton + glassmorphisme.
+ * Design system : "Lagon" — le restaurant est au bord de l'eau.
+ * Nacre et écume en fond, turquoise piscine en accent, verre clair.
+ * Deux surfaces restent sombres et portent donc des couleurs claires
+ * explicites : le voile du hero et le preloader (la « plongée »).
  */
 
 @theme inline {
@@ -43,64 +45,77 @@
   --color-ring-offset-background: var(--background);
 
   --color-dock-label: var(--dock-label);
-  --color-abyss: var(--abyss);
-  --color-marine: var(--marine);
+  --color-shell: var(--shell);
+  --color-foam: var(--foam);
+  --color-lagoon: var(--lagoon);
+  --color-deep: var(--deep);
+  --color-ink: var(--ink);
+  --color-teal: var(--teal);
+  --color-sand: var(--sand);
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
   --color-coral: var(--coral);
-  --color-ivory: var(--ivory);
 }
 
 :root {
   --radius: 0.75rem;
 
-  /* Palette de marque */
-  --abyss: oklch(0.19 0.045 250); /* #0B1B2B */
-  --marine: oklch(0.28 0.06 249); /* #0F2942 */
-  --gold: oklch(0.72 0.11 84); /* #C9A24B */
-  --gold-light: oklch(0.85 0.09 88); /* #E8C874 */
-  --coral: oklch(0.71 0.11 40); /* #E8896B */
-  --ivory: oklch(0.96 0.014 90); /* #F5F2EA */
-
-  --background: var(--abyss);
-  --foreground: var(--ivory);
-  --card: oklch(0.24 0.05 249);
-  --card-foreground: var(--ivory);
-  --popover: oklch(0.24 0.05 249);
-  --popover-foreground: var(--ivory);
-  --primary: var(--gold);
-  --primary-foreground: oklch(0.16 0.04 250);
-  --secondary: oklch(0.31 0.055 249);
-  --secondary-foreground: var(--ivory);
-  --muted: oklch(0.3 0.045 249);
-  --muted-foreground: oklch(0.79 0.02 90);
-  --accent: var(--gold-light);
-  --accent-foreground: oklch(0.16 0.04 250);
-  --destructive: oklch(0.58 0.2 27);
-  --destructive-foreground: var(--ivory);
   /*
-   * --destructive plafonne à 3.28:1 sur les panneaux sombres : insuffisant pour
-   * du texte (AA exige 4.5:1). Cette variante éclaircie tient 5.02:1 sur
-   * `panel-readable` et 4.65:1 sur l'encart d'alerte, et sert donc aux messages
-   * d'erreur, tandis que --destructive reste pour les bordures et fonds.
+   * Palette de marque — "Lagon".
+   * Toutes les chromas sont calées sur le maximum affichable en sRGB pour la
+   * paire (clarté, teinte) : au-delà, le navigateur écrête et la couleur rendue
+   * n'est plus celle sur laquelle les contrastes ont été calculés.
    */
-  --destructive-text: oklch(0.68 0.16 27);
-  --border: oklch(1 0 0 / 16%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: var(--gold);
+  --shell: oklch(0.985 0.008 195); /* #F4FCFC — nacre, fond haut de page */
+  --foam: oklch(0.945 0.032 195); /* #D5F4F3 — écume, fond bas de page */
+  --lagoon: oklch(0.72 0.122 200); /* #04BBC3 — turquoise piscine, décoratif */
+  --deep: oklch(0.32 0.06 225); /* #01394A — eau profonde, voile du hero */
+  --ink: oklch(0.26 0.051 228); /* #002837 — texte courant */
+  --teal: oklch(0.5 0.086 210); /* #02707E — accent porteur de texte */
+  --sand: oklch(0.9 0.035 85); /* #E9DDC4 — sable */
+  --gold: oklch(0.7 0.11 84); /* #BF9846 */
+  --gold-light: oklch(0.82 0.09 88); /* #DCC17F */
+  --coral: oklch(0.55 0.15 32); /* #B94834 */
 
-  /* Surfaces glass */
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-bg-strong: rgba(15, 41, 66, 0.55);
+  --background: var(--shell);
+  --foreground: var(--ink);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--ink);
+  --primary: oklch(0.52 0.088 205); /* #047781 — blanc dessus : 5.21:1 */
+  --primary-foreground: oklch(0.995 0.002 190);
+  --secondary: oklch(0.9 0.045 197);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.93 0.03 197);
+  --muted-foreground: oklch(0.46 0.035 222); /* 6.76:1 sur nacre */
+  /*
+   * L'or ne peut pas porter de texte sur fond clair : 2.58:1 au mieux. L'accent
+   * devient donc le turquoise sombre (5.56:1), et l'or ne subsiste que sur les
+   * surfaces sombres (hero) et les filets purement décoratifs.
+   */
+  --accent: var(--teal);
+  --accent-foreground: oklch(0.995 0.002 190);
+  --destructive: oklch(0.52 0.17 27);
+  --destructive-foreground: oklch(0.995 0.002 190);
+  /* Sur fond clair, --destructive passe déjà le seuil texte : 5.93:1. */
+  --destructive-text: var(--destructive);
+  --border: oklch(0.26 0.051 228 / 14%);
+  --input: oklch(0.26 0.051 228 / 22%);
+  --ring: var(--teal);
+
+  /* Surfaces glass, désormais claires sur fond clair */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.72);
 
   /*
-   * Le dock flotte au-dessus de photos (galerie) dont les zones claires peuvent
-   * remonter derrière le verre. 0.76 est l'opacité minimale du voile qui garde
-   * les libellés à 4.5:1 (AA) même sur un fond blanc, tout en laissant 24 % de
-   * transparence — d'où aussi --dock-label, plus clair que --muted-foreground.
+   * Le dock flotte au-dessus de photos (galerie) dont les zones sombres peuvent
+   * remonter derrière le verre. 0.88 est l'opacité du voile qui garde les
+   * libellés lisibles même sur une photo noire : 11.69:1 pour le libellé actif,
+   * 5.35:1 pour l'inactif.
    */
-  --dock-veil: rgba(11, 27, 43, 0.76);
-  --dock-label: oklch(0.87 0.02 90);
+  --dock-veil: rgba(255, 255, 255, 0.88);
+  --dock-label: var(--muted-foreground);
 
   /*
    * Place occupée par les deux barres fixes du mobile, marges comprises.
@@ -110,54 +125,82 @@
    */
   --topbar-space: 5.5rem;
   --dock-space: calc(6.25rem + env(safe-area-inset-bottom));
-  --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
+  /*
+   * Sur fond clair, un verre se lit par son reflet blanc et une ombre douce
+   * colorée — pas par une bordure blanche, invisible ici. La bordure passe donc
+   * en encre très diluée et l'ombre prend la teinte de l'eau profonde.
+   */
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-edge: rgba(1, 57, 74, 0.1);
+  --glass-shadow: 0 22px 48px -22px rgba(1, 57, 74, 0.35);
+
   --gradient-gold: linear-gradient(120deg, var(--gold), var(--gold-light));
-  --gradient-abyss: linear-gradient(180deg, var(--abyss), var(--marine));
+  /* CTA : assez sombre pour porter du texte blanc (5.21:1). */
+  --gradient-cta: linear-gradient(140deg, var(--primary), var(--teal));
+  /* Décoratif uniquement : trop clair pour du texte blanc. */
+  --gradient-lagoon: linear-gradient(140deg, var(--lagoon), var(--primary));
+  --gradient-sea: linear-gradient(120deg, var(--ink), var(--teal));
+  /* Fond de page : nacre en haut, écume en bas — la lumière traverse l'eau. */
+  --gradient-shallows: linear-gradient(170deg, var(--shell) 0%, var(--shell) 28%, var(--foam) 100%);
+  /* Voile du hero : eau profonde en haut pour la lisibilité, dissous vers la page. */
+  --gradient-dive: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--deep) 82%, transparent) 0%,
+    color-mix(in oklab, var(--deep) 62%, transparent) 38%,
+    color-mix(in oklab, var(--lagoon) 40%, transparent) 72%,
+    var(--shell) 100%
+  );
 }
 
 @utility glass {
   background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 var(--glass-border);
 }
 
 @utility glass-strong {
   background: var(--glass-bg-strong);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 var(--glass-border);
 }
 
 /*
  * Verre "épais" pour les surfaces flottantes (dock mobile, barre de titre).
- * Trois couches empilées : un dégradé spéculaire qui simule la réfraction en haut
- * à gauche, un voile marine pour la lisibilité, puis des ombres internes qui
- * donnent l'épaisseur (biseau clair en haut, ombre en bas).
+ * Trois couches empilées : un reflet spéculaire en haut à gauche, un voile
+ * nacré pour la lisibilité, puis des ombres internes qui donnent l'épaisseur
+ * (biseau blanc en haut, ombre d'eau en bas).
  */
 @utility glass-dock {
   background:
     linear-gradient(
       152deg,
-      rgba(255, 255, 255, 0.11),
-      rgba(255, 255, 255, 0.03) 44%,
-      rgba(255, 255, 255, 0.06)
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.35) 44%,
+      color-mix(in oklab, var(--foam) 55%, transparent)
     ),
     var(--dock-veil);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
-  backdrop-filter: blur(28px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow:
-    0 26px 50px -18px rgba(0, 0, 0, 0.85),
-    0 4px 14px -6px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+    0 22px 44px -18px rgba(1, 57, 74, 0.4),
+    0 4px 14px -6px rgba(1, 57, 74, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(1, 57, 74, 0.08);
 }
 
-/* Filet de lumière dorée posé sur l'arête haute d'une surface en verre. */
+/*
+ * Filet de lumière sur l'arête haute d'une surface en verre. En turquoise :
+ * sur du verre clair, l'or d'origine ne se voyait plus.
+ */
 @utility edge-gold {
   position: relative;
 
@@ -171,23 +214,35 @@
     background: linear-gradient(
       90deg,
       transparent,
-      color-mix(in oklab, var(--gold-light) 85%, transparent),
+      color-mix(in oklab, var(--lagoon) 85%, transparent),
       transparent
     );
-    opacity: 0.75;
+    opacity: 0.85;
     pointer-events: none;
   }
 }
 
-/* Bloc lisible : opacité suffisante pour le contraste AA sur texte long */
+/* Bloc lisible : surface opaque, pour le texte long (carte, formulaires). */
 @utility panel-readable {
-  background: color-mix(in oklab, var(--marine) 88%, black);
-  border: 1px solid var(--glass-border);
+  background: oklch(1 0 0);
+  border: 1px solid var(--glass-edge);
   box-shadow: var(--glass-shadow);
 }
 
+/* Logotype sur surface SOMBRE uniquement (preloader, voile du hero). */
 @utility text-gold-gradient {
   background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Logotype et titres sur surface CLAIRE. L'or y plafonne à 2.58:1 ; ce dégradé
+ * encre → turquoise tient 5.56:1 à son extrémité la plus pâle.
+ */
+@utility text-sea-gradient {
+  background: var(--gradient-sea);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -197,7 +252,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    color-mix(in oklab, var(--gold) 80%, transparent),
+    color-mix(in oklab, var(--lagoon) 85%, transparent),
     transparent
   );
 }
@@ -212,7 +267,7 @@
   }
 
   body {
-    background: var(--abyss);
+    background: var(--shell);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -228,7 +283,7 @@
     position: fixed;
     inset: 0;
     z-index: -1;
-    background: var(--gradient-abyss);
+    background: var(--gradient-shallows);
     pointer-events: none;
   }
 
@@ -241,12 +296,12 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--gold) 45%, transparent);
-    color: var(--ivory);
+    background: color-mix(in oklab, var(--lagoon) 40%, transparent);
+    color: var(--ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--gold-light);
+    outline: 2px solid var(--teal);
     outline-offset: 3px;
   }
 }

@@ -80,7 +80,7 @@ export function SiteNav() {
           className="relative mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4"
         >
           <Link to="/" className="min-w-0">
-            <span className="font-display text-xl tracking-[0.16em] text-gold-gradient">
+            <span className="font-display text-xl tracking-[0.16em] text-sea-gradient">
               L'ALBATROS
             </span>
             <span className="ml-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
@@ -140,7 +140,7 @@ export function SiteNav() {
           />
           <div className="relative flex items-center justify-between gap-3 px-4 py-2.5">
             <Link to="/" className="min-w-0 leading-none" aria-label="L'Albatros — accueil">
-              <span className="font-display text-base tracking-[0.18em] text-gold-gradient">
+              <span className="font-display text-base tracking-[0.18em] text-sea-gradient">
                 L'ALBATROS
               </span>
               <span className="mt-1 block text-[8px] uppercase tracking-[0.34em] text-muted-foreground">
@@ -153,7 +153,7 @@ export function SiteNav() {
               <a
                 href={SITE.phoneHref}
                 aria-label={`Appeler le restaurant au ${SITE.phoneDisplay}`}
-                className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--gold)_40%,transparent)] bg-[color-mix(in_oklab,var(--gold)_12%,transparent)] text-accent transition-transform duration-300 active:scale-90"
+                className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--teal)_35%,transparent)] bg-[color-mix(in_oklab,var(--lagoon)_16%,transparent)] text-teal transition-transform duration-300 active:scale-90"
               >
                 <Phone className="h-4 w-4" aria-hidden="true" />
               </a>
@@ -176,7 +176,7 @@ export function SiteNav() {
             animate={{ x: `${activeIndex * 100}%`, opacity: blobVisible ? 1 : 0 }}
             transition={blobSpring}
           >
-            <span className="absolute inset-x-2 -bottom-2 top-1 rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--gold)_55%,transparent),transparent_70%)] blur-lg" />
+            <span className="absolute inset-x-2 -bottom-2 top-1 rounded-full bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--lagoon)_60%,transparent),transparent_70%)] blur-lg" />
           </motion.span>
 
           {/* Le blob liquide lui-même. */}
@@ -186,7 +186,7 @@ export function SiteNav() {
             animate={{ x: `${activeIndex * 100}%`, opacity: blobVisible ? 1 : 0 }}
             transition={blobSpring}
           >
-            <span className="block h-full w-full rounded-[19px] border border-[color-mix(in_oklab,var(--gold)_42%,transparent)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--gold)_20%,transparent),color-mix(in_oklab,var(--gold)_7%,transparent))]" />
+            <span className="block h-full w-full rounded-[19px] border border-[color-mix(in_oklab,var(--teal)_38%,transparent)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--lagoon)_30%,transparent),color-mix(in_oklab,var(--lagoon)_12%,transparent))]" />
           </motion.span>
 
           <ul className="relative grid grid-cols-5">
@@ -215,7 +215,7 @@ export function SiteNav() {
                       }
                     >
                       {cta ? (
-                        <span className="absolute -top-8 grid h-14 w-14 place-items-center rounded-full bg-[image:var(--gradient-gold)] text-primary-foreground shadow-[0_12px_28px_-8px_color-mix(in_oklab,var(--gold)_85%,transparent),inset_0_1px_0_rgba(255,255,255,0.55)] ring-[3px] ring-[color-mix(in_oklab,var(--abyss)_70%,transparent)] transition-transform duration-300 group-active:scale-90">
+                        <span className="absolute -top-8 grid h-14 w-14 place-items-center rounded-full bg-[image:var(--gradient-cta)] text-primary-foreground shadow-[0_12px_28px_-8px_color-mix(in_oklab,var(--teal)_60%,transparent),inset_0_1px_0_rgba(255,255,255,0.35)] ring-[3px] ring-[color-mix(in_oklab,var(--shell)_92%,transparent)] transition-transform duration-300 group-active:scale-90">
                           <Icon className="h-6 w-6" strokeWidth={1.9} aria-hidden="true" />
                         </span>
                       ) : (

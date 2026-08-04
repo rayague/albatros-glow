@@ -25,7 +25,7 @@ export const Route = createFileRoute("/reserver")({
 });
 
 const fieldClass =
-  "mt-2 w-full rounded-xl border border-input bg-[color-mix(in_oklab,var(--abyss)_75%,black)] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none";
+  "mt-2 w-full rounded-xl border border-input bg-white px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none";
 
 /** Date du jour à Bonifacio, pour l'attribut `min` du sélecteur de date. */
 function todayValue(): string {

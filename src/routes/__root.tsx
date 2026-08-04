@@ -20,7 +20,7 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-dvh items-center justify-center px-4">
       <div className="glass max-w-md rounded-3xl p-10 text-center">
-        <h1 className="font-display text-6xl text-gold-gradient">404</h1>
+        <h1 className="font-display text-6xl text-sea-gradient">404</h1>
         <h2 className="mt-4 text-lg font-semibold">Page introuvable</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Cette page a levé l'ancre. Retour au port ?
@@ -62,10 +62,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Réessayer
           </button>
-          <a
-            href="/"
-            className="rounded-full border border-border px-5 py-2.5 text-sm font-medium"
-          >
+          <a href="/" className="rounded-full border border-border px-5 py-2.5 text-sm font-medium">
             Accueil
           </a>
         </div>
@@ -89,7 +86,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "fr_FR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#0B1B2B" },
+      { name: "theme-color", content: "#F4FCFC" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

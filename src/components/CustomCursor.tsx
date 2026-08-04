@@ -58,7 +58,7 @@ export function CustomCursor() {
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[90] hidden lg:block">
       <div
         ref={ring}
-        className="absolute -ml-4 -mt-4 h-8 w-8 rounded-full border border-[color-mix(in_oklab,var(--gold)_70%,transparent)]"
+        className="absolute -ml-4 -mt-4 h-8 w-8 rounded-full border border-[color-mix(in_oklab,var(--teal)_70%,transparent)]"
       />
       <div ref={dot} className="absolute -ml-[3px] -mt-[3px] h-1.5 w-1.5 rounded-full bg-accent" />
     </div>

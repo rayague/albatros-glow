@@ -4,10 +4,10 @@ import { SITE } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-border bg-[color-mix(in_oklab,var(--abyss)_92%,black)] pb-32 pt-14 lg:pb-14">
+    <footer className="mt-24 border-t border-border bg-[color-mix(in_oklab,var(--foam)_80%,white)] pb-32 pt-14 lg:pb-14">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-display text-xl tracking-[0.16em] text-gold-gradient">L'ALBATROS</p>
+          <p className="font-display text-xl tracking-[0.16em] text-sea-gradient">L'ALBATROS</p>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Brasserie chic sur le port de plaisance de Bonifacio. Produits frais, pêche locale,
             terroirs corses et méditerranéens.

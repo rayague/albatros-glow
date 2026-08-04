@@ -83,7 +83,7 @@ function CartePage() {
             >
               <h2
                 id={`categorie-${slug(category)}`}
-                className="font-display text-2xl text-gold-gradient sm:text-3xl"
+                className="font-display text-2xl text-sea-gradient sm:text-3xl"
               >
                 {category}
               </h2>
@@ -105,7 +105,7 @@ function CartePage() {
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                           <h3 className="font-display text-xl leading-snug">{item.name}</h3>
                           {item.signature && (
-                            <span className="rounded-full border border-[color-mix(in_oklab,var(--gold)_45%,transparent)] px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-accent">
+                            <span className="rounded-full border border-[color-mix(in_oklab,var(--teal)_40%,transparent)] px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-accent">
                               Signature
                             </span>
                           )}

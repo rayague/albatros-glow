@@ -128,10 +128,12 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         const size = s.r * (0.6 + 0.6 * depth);
 
         ctx.beginPath();
+        // Les points les plus proches virent au lagon une fois le globe formé :
+        // la lumière de l'eau, en écho au fond de page vers lequel on remonte.
         ctx.fillStyle =
           e > 0.6 && depth > 0.72
-            ? `rgba(232, 200, 116, ${alpha})`
-            : `rgba(236, 244, 255, ${alpha})`;
+            ? `rgba(120, 226, 232, ${alpha})`
+            : `rgba(228, 248, 250, ${alpha})`;
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -153,7 +155,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     <div
       role="presentation"
       onClick={() => skippable && finish()}
-      className="fixed inset-0 z-[100] bg-abyss"
+      className="fixed inset-0 z-[100] bg-deep"
       style={{
         transition: "clip-path 700ms cubic-bezier(0.65,0,0.35,1), opacity 700ms ease",
         clipPath: leaving ? "circle(140% at 50% 50%)" : "circle(100% at 50% 50%)",
@@ -169,12 +171,17 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         >
           L'ALBATROS
         </p>
-        <p className="text-[11px] uppercase tracking-[0.35em] text-muted-foreground">Bonifacio</p>
+        {/*
+          Le preloader reste la « plongée » : c'est la seule surface sombre avec
+          le hero, ses textes portent donc des couleurs claires explicites et non
+          les tokens de page, devenus sombres.
+        */}
+        <p className="text-[11px] uppercase tracking-[0.35em] text-foam">Bonifacio</p>
       </div>
       {skippable && !leaving && (
         <button
           onClick={() => finish()}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full border border-border px-4 py-2 text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full border border-[color-mix(in_oklab,var(--foam)_45%,transparent)] px-4 py-2 text-xs uppercase tracking-[0.2em] text-foam transition-colors hover:text-shell"
         >
           Entrer
         </button>

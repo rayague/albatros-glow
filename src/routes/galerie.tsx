@@ -100,7 +100,7 @@ function GaleriePage() {
               decoding="async"
               className="w-full transition-transform duration-[1.2s] group-hover:scale-105"
             />
-            <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(11,27,43,0.7))]" />
+            <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,color-mix(in_oklab,var(--deep)_55%,transparent))]" />
           </motion.button>
         ))}
       </div>
@@ -108,7 +108,7 @@ function GaleriePage() {
       <AnimatePresence>
         {photo && (
           <motion.div
-            className="fixed inset-0 z-[80] grid place-items-center bg-[rgba(11,27,43,0.88)] p-4 backdrop-blur-xl"
+            className="fixed inset-0 z-[80] grid place-items-center bg-[color-mix(in_oklab,var(--deep)_92%,transparent)] p-4 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
