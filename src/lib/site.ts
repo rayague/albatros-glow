@@ -12,99 +12,125 @@ export const SITE = {
   maps: "https://www.google.com/maps/search/?api=1&query=47+Quai+Comparetti+20169+Bonifacio",
 } as const;
 
+/*
+ * Informations des mentions légales.
+ *
+ * Les champs à `null` sont ceux que je ne peux pas inventer : la loi impose de
+ * publier des données exactes, et une valeur fausse serait pire qu'une absence.
+ * La page les affiche avec la mention « à compléter », de façon volontairement
+ * visible — un manque discret finirait par être oublié.
+ */
+export type LegalField = string | null;
+
+export const LEGAL = {
+  companyName: "AUX PETITS GOURMETS",
+  siren: "892 139 759",
+  rcs: "RCS Ajaccio",
+  tradeName: "L'Albatros",
+  address: "47 Quai Comparetti, 20169 Bonifacio, Corse, France",
+
+  /** À FOURNIR — figure sur les statuts et l'extrait Kbis. */
+  capital: null as LegalField,
+  /** À FOURNIR — en pratique le président de la SASU. */
+  publicationDirector: null as LegalField,
+  /** À FOURNIR — format FR + 11 caractères, si la société est assujettie. */
+  vat: null as LegalField,
+  /** À FOURNIR — une adresse de contact écrite est attendue en complément du téléphone. */
+  email: null as LegalField,
+
+  /**
+   * Hébergeur. Correspond à la configuration de déploiement actuelle (Vercel,
+   * cf. vercel.json). À corriger si le site est finalement servi ailleurs :
+   * la LCEN impose d'identifier l'hébergeur réel.
+   */
+  host: {
+    name: "Vercel Inc.",
+    address: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
+    url: "https://vercel.com",
+  },
+
+  /** Sous-traitant : achemine les e-mails de réservation (cf. src/lib/reservation.ts). */
+  processors: [
+    {
+      name: "Resend",
+      role: "Acheminement des e-mails de réservation",
+      url: "https://resend.com/legal/privacy-policy",
+    },
+  ],
+
+  /** Tiers appelés depuis le navigateur du visiteur, donc recevant son adresse IP. */
+  thirdParties: [
+    {
+      name: "Google Fonts (Google Ireland Ltd.)",
+      role: "Chargement des polices Fraunces et Inter",
+      url: "https://policies.google.com/privacy",
+    },
+    {
+      name: "OpenStreetMap Foundation",
+      role: "Fond de plan de la page Accès",
+      url: "https://osmfoundation.org/wiki/Privacy_Policy",
+    },
+  ],
+
+  /** Date de dernière révision du texte, affichée en bas de page. */
+  updatedAt: "2026-08-06",
+} as const;
+
 export type MenuCategory = "Entrées" | "Poissons" | "Viandes" | "Desserts";
 
+/**
+ * Les libellés (nom, description) vivent dans les dictionnaires de traduction,
+ * repérés par `id`. Ne restent ici que les données non traduisibles : prix,
+ * catégorie, mise en avant.
+ */
+export type MenuItemId =
+  | "soupe"
+  | "tartare"
+  | "fritto"
+  | "pecheDuJour"
+  | "bouillabaisse"
+  | "thon"
+  | "langouste"
+  | "veau"
+  | "moelleux"
+  | "fiadone";
+
 export type MenuItem = {
-  name: string;
-  description: string;
-  price: string;
+  id: MenuItemId;
+  /** Montant affiché tel quel, ou `null` lorsque le prix dépend de l'arrivage. */
+  price: string | null;
+  /** Mention traduite accolée au montant, ex. « / 2 pers. ». */
+  priceNote?: "perTwo";
   category: MenuCategory;
   signature?: boolean;
 };
 
 export const MENU: MenuItem[] = [
+  { id: "soupe", price: "16 €", category: "Entrées", signature: true },
+  { id: "tartare", price: "22 €", category: "Entrées" },
+  { id: "fritto", price: "19 €", category: "Entrées" },
+  { id: "pecheDuJour", price: null, category: "Poissons", signature: true },
   {
-    name: "Soupe de poissons de roche",
-    description: "Rouille maison, croûtons dorés, tomme corse râpée.",
-    price: "16 €",
-    category: "Entrées",
-    signature: true,
-  },
-  {
-    name: "Tartare de poisson",
-    description: "Pêche du jour, huile d'olive de Balagne, agrumes, herbes fraîches.",
-    price: "22 €",
-    category: "Entrées",
-  },
-  {
-    name: "Fritto misto",
-    description: "Friture légère de petits poissons et calamars, citron confit.",
-    price: "19 €",
-    category: "Entrées",
-  },
-  {
-    name: "Poisson frais de la pêche locale du jour",
-    description: "Entier ou en filet, grillé au feu, légumes de saison du maraîcher.",
-    price: "Selon arrivage",
+    id: "bouillabaisse",
+    price: "78 €",
+    priceNote: "perTwo",
     category: "Poissons",
     signature: true,
   },
-  {
-    name: "Bouillabaisse maison",
-    description: "Sur commande, pour 2 personnes. Poissons de roche, safran, rouille.",
-    price: "78 € / 2 pers.",
-    category: "Poissons",
-    signature: true,
-  },
-  {
-    name: "Thon snacké",
-    description: "Cœur rosé, sésame, émulsion aux herbes du maquis.",
-    price: "28 €",
-    category: "Poissons",
-  },
-  {
-    name: "Langouste",
-    description: "Grillée ou en salade, selon la pêche du jour.",
-    price: "Selon arrivage",
-    category: "Poissons",
-  },
-  {
-    name: "Sauté de veau aux olives",
-    description: "Veau corse mijoté, olives de Méditerranée, polenta crémeuse.",
-    price: "26 €",
-    category: "Viandes",
-  },
-  {
-    name: "Moelleux à la châtaigne",
-    description: "Farine de châtaigne corse, cœur coulant, crème de brocciu.",
-    price: "11 €",
-    category: "Desserts",
-    signature: true,
-  },
-  {
-    name: "Fiadone",
-    description: "Brocciu frais, zeste de citron, eau-de-vie corse.",
-    price: "10 €",
-    category: "Desserts",
-  },
+  { id: "thon", price: "28 €", category: "Poissons" },
+  { id: "langouste", price: null, category: "Poissons" },
+  { id: "veau", price: "26 €", category: "Viandes" },
+  { id: "moelleux", price: "11 €", category: "Desserts", signature: true },
+  { id: "fiadone", price: "10 €", category: "Desserts" },
 ];
 
 export const CATEGORIES: MenuCategory[] = ["Entrées", "Poissons", "Viandes", "Desserts"];
 
-export const TEAM = [
-  {
-    name: "Chef Omar",
-    role: "Chef de cuisine",
-    text: "Une cuisine de brasserie chic, guidée par la pêche du matin et les terroirs corses.",
-  },
-  {
-    name: "Julien",
-    role: "Maître d'hôtel",
-    text: "L'art d'accueillir : un service précis, chaleureux, jamais guindé.",
-  },
-  {
-    name: "Marie-Claire Luciani",
-    role: "Décoration & atmosphère",
-    text: "Bleu, laiton et lumière du port : une salle pensée comme un pont de voilier.",
-  },
+export type TeamMemberId = "omar" | "julien" | "marieClaire";
+
+/** Les noms propres ne se traduisent pas ; rôle et texte viennent du dictionnaire. */
+export const TEAM: { id: TeamMemberId; name: string }[] = [
+  { id: "omar", name: "Chef Omar" },
+  { id: "julien", name: "Julien" },
+  { id: "marieClaire", name: "Marie-Claire Luciani" },
 ];

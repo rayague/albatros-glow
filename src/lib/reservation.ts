@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { SITE } from "@/lib/site";
+import { fr } from "@/lib/i18n/fr";
+import type { Dict } from "@/lib/i18n/fr";
 
 /** Bornes du service continu, utilisées côté client et côté serveur. */
 const OPEN_HOUR = 11;
@@ -17,34 +19,43 @@ function todayInParis(): string {
   }).format(new Date());
 }
 
-export const reservationSchema = z.object({
-  nom: z.string().trim().min(2, "Merci d'indiquer votre nom.").max(80, "Nom trop long."),
-  tel: z
-    .string()
-    .trim()
-    .min(6, "Numéro de téléphone invalide.")
-    .max(30, "Numéro de téléphone invalide."),
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date invalide.")
-    .refine((d) => d >= todayInParis(), "Cette date est déjà passée."),
-  heure: z
-    .string()
-    .regex(/^\d{2}:\d{2}$/, "Heure invalide.")
-    .refine((h) => {
-      const hour = Number(h.slice(0, 2));
-      return hour >= OPEN_HOUR && hour < CLOSE_HOUR;
-    }, `Nous servons de ${OPEN_HOUR}h à ${CLOSE_HOUR}h.`),
-  couverts: z.coerce
-    .number()
-    .int("Nombre de couverts invalide.")
-    .min(1, "Au moins un couvert.")
-    .max(20, "Au-delà de 20 couverts, appelez-nous directement."),
-  email: z.union([z.literal(""), z.string().trim().email("Adresse e-mail invalide.")]),
-  message: z.string().trim().max(1000, "Message trop long.").optional(),
-  /** Piège à robots : un humain ne remplit jamais ce champ masqué. */
-  societe: z.string().max(0).optional(),
-});
+/**
+ * Une seule définition des règles, paramétrée par la langue des messages.
+ *
+ * Le client construit le schéma dans la langue affichée pour montrer les
+ * erreurs au visiteur ; le serveur en construit un autre, en français, pour
+ * revalider la demande. Les deux passent par cette fonction : les règles ne
+ * peuvent donc pas diverger, seule la formulation change.
+ */
+export function buildReservationSchema(t: Dict) {
+  const e = t.booking.errors;
+  return z.object({
+    nom: z.string().trim().min(2, e.name).max(80, e.nameLong),
+    tel: z.string().trim().min(6, e.phone).max(30, e.phone),
+    date: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, e.date)
+      .refine((d) => d >= todayInParis(), e.datePast),
+    heure: z
+      .string()
+      .regex(/^\d{2}:\d{2}$/, e.time)
+      .refine(
+        (h) => {
+          const hour = Number(h.slice(0, 2));
+          return hour >= OPEN_HOUR && hour < CLOSE_HOUR;
+        },
+        e.timeRange(OPEN_HOUR, CLOSE_HOUR),
+      ),
+    couverts: z.coerce.number().int(e.guests).min(1, e.guestsMin).max(20, e.guestsMax),
+    email: z.union([z.literal(""), z.string().trim().email(e.email)]),
+    message: z.string().trim().max(1000, e.messageLong).optional(),
+    /** Piège à robots : un humain ne remplit jamais ce champ masqué. */
+    societe: z.string().max(0).optional(),
+  });
+}
+
+/** Schéma de référence côté serveur : ses messages ne sont jamais affichés. */
+export const reservationSchema = buildReservationSchema(fr);
 
 export type ReservationInput = z.input<typeof reservationSchema>;
 export type Reservation = z.output<typeof reservationSchema>;

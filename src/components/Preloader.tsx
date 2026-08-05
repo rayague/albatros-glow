@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { useI18n } from "@/lib/i18n";
+
 type Star = {
   x0: number;
   y0: number;
@@ -14,6 +16,7 @@ type Star = {
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 export function Preloader({ onDone }: { onDone: () => void }) {
+  const { t } = useI18n();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [leaving, setLeaving] = useState(false);
   const [skippable, setSkippable] = useState(false);
@@ -169,21 +172,21 @@ export function Preloader({ onDone }: { onDone: () => void }) {
           className="font-display text-3xl tracking-[0.18em] text-gold-gradient transition-opacity duration-700 sm:text-4xl"
           style={{ opacity: leaving ? 0 : 1 }}
         >
-          L'ALBATROS
+          {t.nav.brand}
         </p>
         {/*
           Le preloader reste la « plongée » : c'est la seule surface sombre avec
           le hero, ses textes portent donc des couleurs claires explicites et non
           les tokens de page, devenus sombres.
         */}
-        <p className="text-[11px] uppercase tracking-[0.35em] text-foam">Bonifacio</p>
+        <p className="text-[11px] uppercase tracking-[0.35em] text-foam">{t.nav.city}</p>
       </div>
       {skippable && !leaving && (
         <button
           onClick={() => finish()}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full border border-[color-mix(in_oklab,var(--foam)_45%,transparent)] px-4 py-2 text-xs uppercase tracking-[0.2em] text-foam transition-colors hover:text-shell"
         >
-          Entrer
+          {t.preloader.enter}
         </button>
       )}
     </div>

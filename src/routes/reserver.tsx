@@ -1,26 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { cloneElement, useState } from "react";
+import { cloneElement, useMemo, useState } from "react";
 import { AlertCircle, Check, Loader2, Phone } from "lucide-react";
 import { SITE } from "@/lib/site";
-import { reservationSchema, sendReservation } from "@/lib/reservation";
+import { buildReservationSchema, sendReservation } from "@/lib/reservation";
 import { Reveal } from "@/components/Reveal";
+import { dictFor, useI18n } from "@/lib/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locales";
 
 export const Route = createFileRoute("/reserver")({
-  head: () => ({
-    meta: [
-      { title: "Réserver une table — L'Albatros, Bonifacio" },
-      {
-        name: "description",
-        content:
-          "Réservez votre table à L'Albatros, 47 Quai Comparetti à Bonifacio. Service continu de 11h à 23h, 7j/7. Bouillabaisse sur commande.",
-      },
-      { property: "og:title", content: "Réserver une table — L'Albatros, Bonifacio" },
-      {
-        property: "og:description",
-        content: "Une table face aux voiliers du port de Bonifacio, midi et soir.",
-      },
-    ],
-  }),
+  head: ({ match }) => {
+    const t = dictFor((match.search as { lang?: Locale }).lang ?? DEFAULT_LOCALE);
+    return {
+      meta: [
+        { title: t.meta.bookingTitle },
+        { name: "description", content: t.meta.bookingDescription },
+        { property: "og:title", content: t.meta.bookingTitle },
+        { property: "og:description", content: t.meta.bookingOgDescription },
+      ],
+    };
+  },
   component: ReserverPage,
 });
 
@@ -75,17 +73,22 @@ function Field({
 type Status = "idle" | "sending" | "sent" | "error";
 
 function ReserverPage() {
+  const { t } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const sent = status === "sent";
+
+  // Les messages de validation suivent la langue affichée ; les règles, elles,
+  // sont les mêmes que celles appliquées par le serveur.
+  const schema = useMemo(() => buildReservationSchema(t), [t]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const raw = Object.fromEntries(new FormData(form)) as Record<string, string>;
 
-    const parsed = reservationSchema.safeParse(raw);
+    const parsed = schema.safeParse(raw);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
       for (const issue of parsed.error.issues) {
@@ -111,9 +114,7 @@ function ReserverPage() {
       // Aucun repli silencieux : si l'envoi échoue, le visiteur doit le savoir
       // et pouvoir appeler le restaurant.
       console.error(err);
-      setFormError(
-        "Votre demande n'a pas pu être transmise. Merci de nous appeler directement, nous vous répondons de 11h à 23h.",
-      );
+      setFormError(t.booking.failure);
       setStatus("error");
     }
   }
@@ -121,12 +122,9 @@ function ReserverPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 pt-28 lg:pt-16">
       <Reveal>
-        <p className="text-[11px] uppercase tracking-[0.36em] text-accent">Réservation</p>
-        <h1 className="mt-4 font-display text-4xl sm:text-5xl">Réserver une table</h1>
-        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          Service continu de 11h à 23h, 7j/7. Pour la bouillabaisse maison (2 personnes) et la
-          langouste, merci de commander à l'avance.
-        </p>
+        <p className="text-[11px] uppercase tracking-[0.36em] text-accent">{t.booking.eyebrow}</p>
+        <h1 className="mt-4 font-display text-4xl sm:text-5xl">{t.booking.title}</h1>
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t.booking.intro}</p>
       </Reveal>
 
       {sent ? (
@@ -134,17 +132,16 @@ function ReserverPage() {
           <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground">
             <Check className="h-6 w-6" aria-hidden="true" />
           </div>
-          <h2 className="mt-5 font-display text-2xl">Demande enregistrée</h2>
+          <h2 className="mt-5 font-display text-2xl">{t.booking.successTitle}</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Nous vous confirmons votre table par téléphone. Pour une réservation immédiate,
-            appelez-nous au {SITE.phoneDisplay}.
+            {t.booking.successText(SITE.phoneDisplay)}
           </p>
           <a
             href={SITE.phoneHref}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            Appeler le restaurant
+            {t.booking.callRestaurant}
           </a>
         </div>
       ) : (
@@ -154,22 +151,27 @@ function ReserverPage() {
           noValidate
         >
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field id="nom" label="Nom" error={fieldErrors.nom}>
-              <input id="nom" name="nom" autoComplete="name" placeholder="Votre nom" />
+            <Field id="nom" label={t.booking.name} error={fieldErrors.nom}>
+              <input
+                id="nom"
+                name="nom"
+                autoComplete="name"
+                placeholder={t.booking.namePlaceholder}
+              />
             </Field>
-            <Field id="tel" label="Téléphone" error={fieldErrors.tel}>
+            <Field id="tel" label={t.booking.phone} error={fieldErrors.tel}>
               <input
                 id="tel"
                 name="tel"
                 type="tel"
                 autoComplete="tel"
-                placeholder="06 12 34 56 78"
+                placeholder={t.booking.phonePlaceholder}
               />
             </Field>
-            <Field id="date" label="Date" error={fieldErrors.date}>
+            <Field id="date" label={t.booking.date} error={fieldErrors.date}>
               <input id="date" name="date" type="date" min={todayValue()} />
             </Field>
-            <Field id="heure" label="Heure" error={fieldErrors.heure}>
+            <Field id="heure" label={t.booking.time} error={fieldErrors.heure}>
               <input
                 id="heure"
                 name="heure"
@@ -179,7 +181,7 @@ function ReserverPage() {
                 defaultValue="20:00"
               />
             </Field>
-            <Field id="couverts" label="Nombre de couverts" error={fieldErrors.couverts}>
+            <Field id="couverts" label={t.booking.guests} error={fieldErrors.couverts}>
               <input
                 id="couverts"
                 name="couverts"
@@ -189,31 +191,31 @@ function ReserverPage() {
                 defaultValue={2}
               />
             </Field>
-            <Field id="email" label="E-mail (facultatif)" error={fieldErrors.email}>
+            <Field id="email" label={t.booking.email} error={fieldErrors.email}>
               <input
                 id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
-                placeholder="vous@email.com"
+                placeholder={t.booking.emailPlaceholder}
               />
             </Field>
           </div>
 
           <div className="mt-5">
-            <Field id="message" label="Demande particulière" error={fieldErrors.message}>
+            <Field id="message" label={t.booking.message} error={fieldErrors.message}>
               <textarea
                 id="message"
                 name="message"
                 rows={3}
-                placeholder="Bouillabaisse sur commande, allergies, table en terrasse…"
+                placeholder={t.booking.messagePlaceholder}
               />
             </Field>
           </div>
 
           {/* Piège à robots : hors flux et hors tabulation, invisible pour un humain. */}
           <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
-            <label htmlFor="societe">Société</label>
+            <label htmlFor="societe">{t.booking.company}</label>
             <input id="societe" name="societe" tabIndex={-1} autoComplete="off" />
           </div>
 
@@ -248,12 +250,9 @@ function ReserverPage() {
             {status === "sending" && (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
             )}
-            {status === "sending" ? "Envoi en cours…" : "Envoyer ma demande"}
+            {status === "sending" ? t.booking.sending : t.booking.submit}
           </button>
-          <p className="mt-4 text-xs text-muted-foreground">
-            Vos données servent uniquement au traitement de la réservation et ne sont jamais cédées
-            à des tiers.
-          </p>
+          <p className="mt-4 text-xs text-muted-foreground">{t.booking.privacy}</p>
         </form>
       )}
     </div>

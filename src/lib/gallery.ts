@@ -3,14 +3,16 @@ import terrasseImg from "@/assets/terrasse.jpg";
 import dishImg from "@/assets/dish-poisson.jpg";
 import langousteImg from "@/assets/langouste.jpg";
 
+export type PhotoId = "port" | "rouget" | "langoustes" | "terrasse";
+
 export type Photo = {
-  src: string;
   /**
-   * Description de ce que montre l'image, pour les lecteurs d'écran et le
-   * référencement. Obligatoire : l'absence de texte alternatif était l'un des
-   * défauts relevés sur l'ancien site.
+   * Repère la description dans les dictionnaires (`gallery.photos`). Le texte
+   * alternatif est traduit : c'est du contenu lu par les lecteurs d'écran et
+   * indexé par les moteurs, il doit suivre la langue de la page.
    */
-  alt: string;
+  id: PhotoId;
+  src: string;
   /** Dimensions du fichier source : elles réservent la place et évitent le saut de mise en page. */
   w: number;
   h: number;
@@ -20,35 +22,17 @@ export type Photo = {
  * POUR AJOUTER UNE PHOTO
  * 1. Déposer le fichier dans `src/assets/` (JPEG ou WebP, ~1600px de large,
  *    compressé — les images sont servies telles quelles).
- * 2. L'importer en haut de ce fichier.
- * 3. Ajouter une entrée ci-dessous avec sa description et ses dimensions réelles.
+ * 2. L'importer en haut de ce fichier et ajouter une entrée ci-dessous.
+ * 3. Ajouter son identifiant au type `PhotoId`, puis sa description dans
+ *    `gallery.photos` des trois dictionnaires (fr, en, it). TypeScript
+ *    signalera toute langue oubliée.
  *
  * La mise en page s'adapte seule : la galerie est en colonnes maçonnées et
  * chaque photo garde ses proportions d'origine, quel que soit leur nombre.
  */
 export const PHOTOS: Photo[] = [
-  {
-    src: heroImg,
-    alt: "Le port de plaisance de Bonifacio la nuit vu depuis la terrasse du restaurant",
-    w: 1920,
-    h: 1280,
-  },
-  {
-    src: dishImg,
-    alt: "Filet de rouget dans son bouillon de poissons de roche safrané",
-    w: 1024,
-    h: 1280,
-  },
-  {
-    src: langousteImg,
-    alt: "Plateau doré de langoustes, gambas et moules grillées",
-    w: 1024,
-    h: 1024,
-  },
-  {
-    src: terrasseImg,
-    alt: "Tables dressées en terrasse au crépuscule, yachts amarrés en arrière-plan",
-    w: 1280,
-    h: 960,
-  },
+  { id: "port", src: heroImg, w: 1920, h: 1280 },
+  { id: "rouget", src: dishImg, w: 1024, h: 1280 },
+  { id: "langoustes", src: langousteImg, w: 1024, h: 1024 },
+  { id: "terrasse", src: terrasseImg, w: 1280, h: 960 },
 ];

@@ -1,26 +1,25 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "motion/react";
 import { CalendarHeart, Home, Images, Phone, UtensilsCrossed } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SITE } from "@/lib/site";
+import { useI18n, type Dict } from "@/lib/i18n";
+import { DEFAULT_LOCALE, LOCALES, LOCALE_META } from "@/lib/i18n/locales";
 
 type NavItem = {
   to: "/" | "/carte" | "/reserver" | "/galerie" | "/contact";
-  label: string;
+  label: (t: Dict) => string;
   Icon: typeof Home;
   cta?: boolean;
 };
 
 const items: NavItem[] = [
-  { to: "/", label: "Accueil", Icon: Home },
-  { to: "/carte", label: "Carte", Icon: UtensilsCrossed },
-  { to: "/reserver", label: "Réserver", Icon: CalendarHeart, cta: true },
-  { to: "/galerie", label: "Galerie", Icon: Images },
-  { to: "/contact", label: "Contact", Icon: Phone },
+  { to: "/", label: (t) => t.nav.home, Icon: Home },
+  { to: "/carte", label: (t) => t.nav.menu, Icon: UtensilsCrossed },
+  { to: "/reserver", label: (t) => t.nav.book, Icon: CalendarHeart, cta: true },
+  { to: "/galerie", label: (t) => t.nav.gallery, Icon: Images },
+  { to: "/contact", label: (t) => t.nav.contact, Icon: Phone },
 ];
-
-const langs = ["FR", "EN", "IT"] as const;
-type Lang = (typeof langs)[number];
 
 const isActive = (to: NavItem["to"], pathname: string) =>
   to === "/" ? pathname === "/" : pathname.startsWith(to);
@@ -28,7 +27,7 @@ const isActive = (to: NavItem["to"], pathname: string) =>
 export function SiteNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState<Lang>("FR");
+  const { t } = useI18n();
   const reduced = useReducedMotion();
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export function SiteNav() {
         href="#contenu"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-primary focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-primary-foreground"
       >
-        Aller au contenu
+        {t.nav.skipToContent}
       </a>
 
       {/* ─────────────  Desktop  ───────────── */}
@@ -76,15 +75,15 @@ export function SiteNav() {
           }`}
         />
         <nav
-          aria-label="Navigation principale"
+          aria-label={t.nav.mainNavAria}
           className="relative mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4"
         >
           <Link to="/" className="min-w-0">
             <span className="font-display text-xl tracking-[0.16em] text-sea-gradient">
-              L'ALBATROS
+              {t.nav.brand}
             </span>
             <span className="ml-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-              Bonifacio
+              {t.nav.city}
             </span>
           </Link>
 
@@ -98,7 +97,7 @@ export function SiteNav() {
                     activeOptions={{ exact: to === "/" }}
                     className="relative block px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-foreground"
                   >
-                    {label}
+                    {label(t)}
                     {isActive(to, pathname) && (
                       <motion.span
                         layoutId="nav-underline"
@@ -111,7 +110,7 @@ export function SiteNav() {
           </ul>
 
           <div className="flex items-center gap-3">
-            <LangSwitch lang={lang} onChange={setLang} />
+            <LangSwitch />
             <a
               href={SITE.phoneHref}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -123,7 +122,7 @@ export function SiteNav() {
               data-magnetic
               className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
             >
-              Réserver
+              {t.nav.book}
             </Link>
           </div>
         </nav>
@@ -139,20 +138,20 @@ export function SiteNav() {
             }`}
           />
           <div className="relative flex items-center justify-between gap-3 px-4 py-2.5">
-            <Link to="/" className="min-w-0 leading-none" aria-label="L'Albatros — accueil">
+            <Link to="/" className="min-w-0 leading-none" aria-label={t.nav.homeAria}>
               <span className="font-display text-base tracking-[0.18em] text-sea-gradient">
-                L'ALBATROS
+                {t.nav.brand}
               </span>
               <span className="mt-1 block text-[8px] uppercase tracking-[0.34em] text-muted-foreground">
-                Bonifacio
+                {t.nav.city}
               </span>
             </Link>
 
             <div className="flex shrink-0 items-center gap-2">
-              <LangSwitch lang={lang} onChange={setLang} compact />
+              <LangSwitch compact />
               <a
                 href={SITE.phoneHref}
-                aria-label={`Appeler le restaurant au ${SITE.phoneDisplay}`}
+                aria-label={t.nav.callAria(SITE.phoneDisplay)}
                 className="grid h-10 w-10 place-items-center rounded-full border border-[color-mix(in_oklab,var(--teal)_35%,transparent)] bg-[color-mix(in_oklab,var(--lagoon)_16%,transparent)] text-teal transition-transform duration-300 active:scale-90"
               >
                 <Phone className="h-4 w-4" aria-hidden="true" />
@@ -231,7 +230,7 @@ export function SiteNav() {
                         active ? "text-foreground" : "text-dock-label"
                       }`}
                     >
-                      {label}
+                      {label(t)}
                     </span>
                   </Link>
                 </li>
@@ -244,38 +243,55 @@ export function SiteNav() {
   );
 }
 
-function LangSwitch({
-  lang,
-  onChange,
-  compact = false,
-}: {
-  lang: Lang;
-  onChange: (l: Lang) => void;
-  compact?: boolean;
-}) {
+/**
+ * Sélecteur de langue. Il navigue vers la page courante en changeant le seul
+ * paramètre `lang`, ce qui conserve la route, l'historique et le défilement.
+ * Le français, langue par défaut, retire le paramètre plutôt que d'écrire
+ * `?lang=fr` : une seule URL par page et par langue.
+ */
+function LangSwitch({ compact = false }: { compact?: boolean }) {
+  const navigate = useNavigate();
+  const { locale, t } = useI18n();
+
   return (
     <div
       className="flex items-center gap-0.5 rounded-full border border-border p-0.5"
       role="group"
-      aria-label="Langue du site"
+      aria-label={t.nav.languageAria}
     >
-      {langs.map((l) => (
-        <button
-          key={l}
-          type="button"
-          onClick={() => onChange(l)}
-          aria-pressed={lang === l}
-          className={`rounded-full tracking-widest transition-colors ${
-            compact ? "px-1.5 py-1 text-[10px]" : "px-2 py-1 text-[11px]"
-          } ${
-            lang === l
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          {l}
-        </button>
-      ))}
+      {LOCALES.map((l) => {
+        const current = l === locale;
+        return (
+          <button
+            key={l}
+            type="button"
+            lang={LOCALE_META[l].htmlLang}
+            onClick={() =>
+              navigate({
+                to: ".",
+                search: (prev: Record<string, unknown>) => ({
+                  ...prev,
+                  lang: l === DEFAULT_LOCALE ? undefined : l,
+                }),
+                replace: true,
+                resetScroll: false,
+              })
+            }
+            aria-current={current ? "true" : undefined}
+            title={LOCALE_META[l].name}
+            className={`rounded-full tracking-widest transition-colors ${
+              compact ? "px-1.5 py-1 text-[10px]" : "px-2 py-1 text-[11px]"
+            } ${
+              current
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {LOCALE_META[l].label}
+            <span className="sr-only"> — {LOCALE_META[l].name}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

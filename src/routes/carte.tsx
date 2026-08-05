@@ -3,23 +3,21 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { CATEGORIES, MENU, SITE, type MenuCategory } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
+import { dictFor, menuPrice, useI18n } from "@/lib/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locales";
 
 export const Route = createFileRoute("/carte")({
-  head: () => ({
-    meta: [
-      { title: "La Carte — L'Albatros, Bonifacio" },
-      {
-        name: "description",
-        content:
-          "La carte de L'Albatros à Bonifacio : soupe de poissons de roche, bouillabaisse maison, thon snacké, langouste, moelleux à la châtaigne.",
-      },
-      { property: "og:title", content: "La Carte — L'Albatros, Bonifacio" },
-      {
-        property: "og:description",
-        content: "Entrées, poissons de la pêche du jour, viandes et desserts corses.",
-      },
-    ],
-  }),
+  head: ({ match }) => {
+    const t = dictFor((match.search as { lang?: Locale }).lang ?? DEFAULT_LOCALE);
+    return {
+      meta: [
+        { title: t.meta.menuTitle },
+        { name: "description", content: t.meta.menuDescription },
+        { property: "og:title", content: t.meta.menuTitle },
+        { property: "og:description", content: t.meta.menuOgDescription },
+      ],
+    };
+  },
   component: CartePage,
 });
 
@@ -27,6 +25,7 @@ export const Route = createFileRoute("/carte")({
 const slug = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 function CartePage() {
+  const { t } = useI18n();
   const [filter, setFilter] = useState<MenuCategory | "Tout">("Tout");
   const reduced = useReducedMotion();
 
@@ -40,19 +39,18 @@ function CartePage() {
   return (
     <div className="mx-auto max-w-4xl px-5 pt-28 lg:pt-16">
       <Reveal>
-        <p className="text-[11px] uppercase tracking-[0.36em] text-accent">Cuisine du marché</p>
-        <h1 className="mt-4 font-display text-4xl sm:text-5xl">La Carte</h1>
+        <p className="text-[11px] uppercase tracking-[0.36em] text-accent">{t.menu.eyebrow}</p>
+        <h1 className="mt-4 font-display text-4xl sm:text-5xl">{t.menu.title}</h1>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          La carte évolue au rythme de la pêche et du marché. Certaines pièces — langouste,
-          bouillabaisse — se commandent à l'avance au{" "}
+          {t.menu.introBefore}
           <a href={SITE.phoneHref} className="text-accent underline-offset-4 hover:underline">
             {SITE.phoneDisplay}
           </a>
-          .
+          {t.menu.introAfter}
         </p>
       </Reveal>
 
-      <div role="group" aria-label="Filtrer par catégorie" className="mt-9 flex flex-wrap gap-2">
+      <div role="group" aria-label={t.menu.filterAria} className="mt-9 flex flex-wrap gap-2">
         {(["Tout", ...CATEGORIES] as const).map((c) => (
           <button
             key={c}
@@ -64,7 +62,7 @@ function CartePage() {
                 : "glass text-muted-foreground hover:text-foreground"
             }`}
           >
-            {c}
+            {c === "Tout" ? t.menu.filterAll : t.menu.categories[c]}
           </button>
         ))}
       </div>
@@ -85,14 +83,14 @@ function CartePage() {
                 id={`categorie-${slug(category)}`}
                 className="font-display text-2xl text-sea-gradient sm:text-3xl"
               >
-                {category}
+                {t.menu.categories[category]}
               </h2>
               <div className="hairline-gold mt-3 h-px" />
 
               <ul className="mt-5 space-y-3">
                 {items.map((item) => (
                   <li
-                    key={item.name}
+                    key={item.id}
                     className="panel-readable rounded-2xl p-5 transition-transform duration-300 hover:-translate-y-0.5"
                   >
                     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
@@ -103,18 +101,22 @@ function CartePage() {
                           (« Soupe de poissons de rochesignature »).
                         */}
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                          <h3 className="font-display text-xl leading-snug">{item.name}</h3>
+                          <h3 className="font-display text-xl leading-snug">
+                            {t.menu.items[item.id].name}
+                          </h3>
                           {item.signature && (
                             <span className="rounded-full border border-[color-mix(in_oklab,var(--teal)_40%,transparent)] px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-accent">
-                              Signature
+                              {t.menu.signature}
                             </span>
                           )}
                         </div>
                         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                          {item.description}
+                          {t.menu.items[item.id].description}
                         </p>
                       </div>
-                      <p className="shrink-0 whitespace-nowrap text-sm text-accent">{item.price}</p>
+                      <p className="shrink-0 whitespace-nowrap text-sm text-accent">
+                        {menuPrice(item, t)}
+                      </p>
                     </div>
                   </li>
                 ))}
@@ -124,10 +126,7 @@ function CartePage() {
         </AnimatePresence>
       </div>
 
-      <p className="mt-10 text-xs leading-relaxed text-muted-foreground">
-        Allergènes : la liste complète des allergènes présents dans nos préparations est disponible
-        en salle sur simple demande auprès de Julien et de son équipe.
-      </p>
+      <p className="mt-10 text-xs leading-relaxed text-muted-foreground">{t.menu.allergens}</p>
     </div>
   );
 }

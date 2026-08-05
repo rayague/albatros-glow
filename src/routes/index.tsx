@@ -9,28 +9,26 @@ import dishImg from "@/assets/dish-poisson.jpg";
 import langousteImg from "@/assets/langouste.jpg";
 import { Reveal, SplitText } from "@/components/Reveal";
 import { MENU, SITE, TEAM } from "@/lib/site";
+import { dictFor, menuPrice, useI18n } from "@/lib/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locales";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "L'Albatros — Restaurant de poissons, port de Bonifacio" },
-      {
-        name: "description",
-        content:
-          "Brasserie chic face aux voiliers du port de Bonifacio : pêche du jour, bouillabaisse maison, moelleux à la châtaigne. Ouvert 7j/7 de 11h à 23h.",
-      },
-      { property: "og:title", content: "L'Albatros — Restaurant de poissons, port de Bonifacio" },
-      {
-        property: "og:description",
-        content:
-          "Terrasse abritée face à la marina, cuisine du Chef Omar, produits frais et circuits courts.",
-      },
-    ],
-  }),
+  head: ({ match }) => {
+    const t = dictFor((match.search as { lang?: Locale }).lang ?? DEFAULT_LOCALE);
+    return {
+      meta: [
+        { title: t.meta.homeTitle },
+        { name: "description", content: t.meta.homeDescription },
+        { property: "og:title", content: t.meta.homeTitle },
+        { property: "og:description", content: t.meta.homeOgDescription },
+      ],
+    };
+  },
   component: Index,
 });
 
 function Index() {
+  const { t } = useI18n();
   const heroRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -44,7 +42,7 @@ function Index() {
       <section ref={heroRef} className="relative min-h-[92dvh] overflow-hidden">
         <motion.img
           src={heroImg}
-          alt="Terrasse de L'Albatros la nuit face aux voiliers du port de Bonifacio"
+          alt={t.home.heroAlt}
           width={1920}
           height={1280}
           style={{ y }}
@@ -73,7 +71,7 @@ function Index() {
             `muted-foreground` qui sont sombres depuis le passage en palette claire.
           */}
           <p className="text-[10px] uppercase tracking-[0.36em] text-sand sm:text-[11px] sm:tracking-[0.42em]">
-            47 Quai Comparetti · Bonifacio
+            {t.home.eyebrow}
           </p>
           {/*
             Taille fluide bornée par la largeur ET la hauteur : un palier basé
@@ -81,11 +79,11 @@ function Index() {
             paysage (740x360), qui poussait les CTA sous le dock.
           */}
           <h1 className="mt-3 font-display text-[clamp(1.7rem,min(9vw,9vh),4.5rem)] leading-[1.08] text-shell sm:mt-5">
-            <SplitText text="La Méditerranée, servie face aux voiliers" />
+            {/* `key` force le re-jeu de l'animation au changement de langue. */}
+            <SplitText key={t.home.title} text={t.home.title} />
           </h1>
           <p className="mt-4 max-w-xl text-balance text-sm leading-relaxed text-foam [@media(max-height:480px)]:hidden sm:mt-6 sm:text-base">
-            Brasserie chic sur le port de plaisance. Pêche locale du jour, produits frais et
-            circuits courts, sous la direction du Chef Omar.
+            {t.home.intro}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-9">
             <Link
@@ -93,7 +91,7 @@ function Index() {
               data-magnetic
               className="group inline-flex items-center gap-2 rounded-full bg-lagoon px-7 py-3.5 text-sm font-medium text-ink transition-transform duration-300 hover:scale-[1.04]"
             >
-              Réserver une table
+              {t.home.ctaBook}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
@@ -101,7 +99,7 @@ function Index() {
               data-magnetic
               className="glass inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium"
             >
-              Découvrir la carte
+              {t.home.ctaMenu}
             </Link>
           </div>
 
@@ -114,7 +112,7 @@ function Index() {
           <div className="glass mt-6 grid w-full max-w-2xl grid-cols-1 gap-3 rounded-2xl px-5 py-3 text-sm max-lg:[@media(max-height:620px)]:hidden sm:mt-12 sm:grid-cols-3 sm:py-4">
             <p className="flex items-center justify-center gap-2">
               <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-              11h – 23h, 7j/7
+              {t.home.hours}
             </p>
             <a href={SITE.phoneHref} className="hidden items-center justify-center gap-2 sm:flex">
               <Phone className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
@@ -122,7 +120,7 @@ function Index() {
             </a>
             <p className="hidden items-center justify-center gap-2 sm:flex">
               <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-              Port de Bonifacio
+              {t.home.port}
             </p>
           </div>
         </motion.div>
@@ -132,22 +130,15 @@ function Index() {
       <section className="mx-auto max-w-6xl px-5 py-24">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <p className="text-[11px] uppercase tracking-[0.36em] text-accent">Notre philosophie</p>
+            <p className="text-[11px] uppercase tracking-[0.36em] text-accent">
+              {t.home.storyEyebrow}
+            </p>
             <h2 className="mt-4 font-display text-3xl leading-tight sm:text-4xl">
-              Depuis 2021, une table où le port entre dans l'assiette
+              {t.home.storyTitle}
             </h2>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              <p>
-                Sur le quai Comparetti, la terrasse abritée de L'Albatros regarde les voiliers
-                rentrer. En 2026, une nouvelle direction reprend la maison sans en changer l'âme :
-                le produit d'abord, la mer ensuite, la générosité toujours.
-              </p>
-              <p>
-                Le décor imaginé par Marie-Claire Luciani joue le bleu et l'or — la mer et le
-                coucher de soleil sur la marina. En cuisine, le Chef Omar travaille les terroirs
-                corses et méditerranéens en circuits courts ; en salle, Julien orchestre un service
-                précis et chaleureux.
-              </p>
+              <p>{t.home.storyP1}</p>
+              <p>{t.home.storyP2}</p>
             </div>
           </Reveal>
 
@@ -155,7 +146,7 @@ function Index() {
             <div className="overflow-hidden rounded-3xl border border-border">
               <img
                 src={terrasseImg}
-                alt="Tables dressées sur la terrasse de L'Albatros au crépuscule, vue sur la marina"
+                alt={t.home.terraceAlt}
                 width={1280}
                 height={960}
                 loading="lazy"
@@ -163,10 +154,8 @@ function Index() {
               />
             </div>
             <div className="glass absolute -bottom-6 -left-2 hidden max-w-[220px] rounded-2xl p-4 sm:block">
-              <p className="font-display text-lg">Terrasse abritée</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Face aux voiliers, service continu de 11h à 23h.
-              </p>
+              <p className="font-display text-lg">{t.home.terraceBadge}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{t.home.terraceBadgeText}</p>
             </div>
           </Reveal>
         </div>
@@ -175,19 +164,21 @@ function Index() {
       {/* SIGNATURES */}
       <section className="mx-auto max-w-6xl px-5 py-16">
         <Reveal>
-          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">Les signatures</p>
-          <h2 className="mt-4 font-display text-3xl sm:text-4xl">Ce qu'il ne faut pas manquer</h2>
+          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">
+            {t.home.signaturesEyebrow}
+          </p>
+          <h2 className="mt-4 font-display text-3xl sm:text-4xl">{t.home.signaturesTitle}</h2>
         </Reveal>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {signatures.map((item, i) => (
-            <Reveal key={item.name} delay={i * 0.07}>
+            <Reveal key={item.id} delay={i * 0.07}>
               <article className="glass group h-full rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1.5">
-                <h3 className="font-display text-xl leading-snug">{item.name}</h3>
+                <h3 className="font-display text-xl leading-snug">{t.menu.items[item.id].name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
+                  {t.menu.items[item.id].description}
                 </p>
-                <p className="mt-4 text-sm text-accent">{item.price}</p>
+                <p className="mt-4 text-sm text-accent">{menuPrice(item, t)}</p>
               </article>
             </Reveal>
           ))}
@@ -199,7 +190,7 @@ function Index() {
             data-magnetic
             className="inline-flex min-h-11 items-center gap-2 text-sm text-accent hover:underline"
           >
-            Voir toute la carte <ArrowRight className="h-4 w-4" />
+            {t.home.seeFullMenu} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </Reveal>
       </section>
@@ -212,26 +203,18 @@ function Index() {
       */}
       <section className="mx-auto max-w-6xl px-5 py-8">
         <Reveal>
-          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">En images</p>
-          <h2 className="mt-4 font-display text-3xl sm:text-4xl">La maison en images</h2>
+          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">
+            {t.home.imagesEyebrow}
+          </p>
+          <h2 className="mt-4 font-display text-3xl sm:text-4xl">{t.home.imagesTitle}</h2>
         </Reveal>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           {[
-            {
-              src: dishImg,
-              alt: "Poisson de roche servi en soupe safranée, assiette à filet doré",
-              w: 1024,
-              h: 1280,
-            },
-            {
-              src: langousteImg,
-              alt: "Plateau de langoustes et fruits de mer grillés",
-              w: 1024,
-              h: 1024,
-            },
+            { src: dishImg, alt: t.gallery.photos.rouget, w: 1024, h: 1280 },
+            { src: langousteImg, alt: t.gallery.photos.langoustes, w: 1024, h: 1024 },
           ].map((img) => (
-            <Reveal key={img.alt}>
+            <Reveal key={img.src}>
               <div className="overflow-hidden rounded-3xl border border-border">
                 <img
                   src={img.src}
@@ -253,7 +236,7 @@ function Index() {
             data-magnetic
             className="inline-flex min-h-11 items-center gap-2 text-sm text-accent hover:underline"
           >
-            Voir toute la galerie <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            {t.home.seeFullGallery} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </Reveal>
       </section>
@@ -261,16 +244,22 @@ function Index() {
       {/* EQUIPE */}
       <section className="mx-auto max-w-6xl px-5 py-24">
         <Reveal>
-          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">La maison</p>
-          <h2 className="mt-4 font-display text-3xl sm:text-4xl">L'équipe</h2>
+          <p className="text-[11px] uppercase tracking-[0.36em] text-accent">
+            {t.home.teamEyebrow}
+          </p>
+          <h2 className="mt-4 font-display text-3xl sm:text-4xl">{t.home.teamTitle}</h2>
         </Reveal>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {TEAM.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.08}>
+            <Reveal key={p.id} delay={i * 0.08}>
               <article className="glass h-full rounded-3xl p-7 transition-transform duration-500 hover:-translate-y-1.5">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-accent">{p.role}</p>
+                <p className="text-[11px] uppercase tracking-[0.28em] text-accent">
+                  {t.team[p.id].role}
+                </p>
                 <h3 className="mt-3 font-display text-2xl">{p.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {t.team[p.id].text}
+                </p>
               </article>
             </Reveal>
           ))}
@@ -281,18 +270,15 @@ function Index() {
       <section className="mx-auto max-w-4xl px-5 pb-8">
         <Reveal>
           <div className="panel-readable relative overflow-hidden rounded-3xl px-6 py-14 text-center">
-            <h2 className="font-display text-3xl sm:text-4xl">Une table face au port ?</h2>
-            <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">
-              Réservez en ligne en une minute, ou appelez-nous directement — nous répondons de 11h à
-              23h.
-            </p>
+            <h2 className="font-display text-3xl sm:text-4xl">{t.home.ctaTitle}</h2>
+            <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">{t.home.ctaText}</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 to="/reserver"
                 data-magnetic
                 className="rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.04]"
               >
-                Réserver en ligne
+                {t.home.ctaBookOnline}
               </Link>
               <a
                 href={SITE.phoneHref}
