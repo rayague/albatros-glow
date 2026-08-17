@@ -101,6 +101,13 @@ export const fr = {
     perTwo: "/ 2 pers.",
     allergens:
       "Allergènes : la liste complète des allergènes présents dans nos préparations est disponible en salle sur simple demande auprès de notre équipe.",
+    carteAria: "Choisir une carte",
+    perPerson: "par personne",
+    per100g: "les 100 g",
+    onArrival: "Selon arrivage",
+    chefNote:
+      "Notre chef propose une carte inspirée du marché et de la saisonnalité, élaborée essentiellement à base de produits frais et locaux.",
+    tableService: "Découpé et servi en salle",
     categories: {
       Entrées: "Entrées",
       Poissons: "Poissons",

@@ -97,6 +97,13 @@ export const it: Dict = {
     perTwo: "/ 2 persone",
     allergens:
       "Allergeni: l'elenco completo degli allergeni presenti nelle nostre preparazioni è disponibile in sala, basta chiederlo a un membro del nostro team.",
+    carteAria: "Scegli un menu",
+    perPerson: "a persona",
+    per100g: "ogni 100 g",
+    onArrival: "Secondo il pescato",
+    chefNote:
+      "Il nostro chef propone un menu ispirato al mercato e alla stagionalità, costruito soprattutto su prodotti freschi e locali.",
+    tableService: "Sfilettato e servito in sala",
     categories: {
       Entrées: "Antipasti",
       Poissons: "Pesce",

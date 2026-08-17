@@ -97,6 +97,13 @@ export const en: Dict = {
     perTwo: "/ 2 people",
     allergens:
       "Allergens: the full list of allergens present in our dishes is available in the restaurant, simply ask a member of our team.",
+    carteAria: "Choose a menu",
+    perPerson: "per person",
+    per100g: "per 100 g",
+    onArrival: "Depending on the catch",
+    chefNote:
+      "Our chef offers a menu inspired by the market and the seasons, built above all on fresh, local produce.",
+    tableService: "Carved and served at your table",
     categories: {
       Entrées: "Starters",
       Poissons: "Fish",
