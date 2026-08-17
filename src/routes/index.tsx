@@ -8,8 +8,9 @@ import terrasseImg from "@/assets/terrasse.jpg";
 import dishImg from "@/assets/dish-poisson.jpg";
 import langousteImg from "@/assets/langouste.jpg";
 import { Reveal, SplitText } from "@/components/Reveal";
-import { MENU, SITE, TEAM } from "@/lib/site";
-import { dictFor, menuPrice, useI18n } from "@/lib/i18n";
+import { SITE, TEAM } from "@/lib/site";
+import { dictFor, useI18n } from "@/lib/i18n";
+import { HERO_DISH, SIGNATURE_DISHES, pick } from "@/lib/menu";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locales";
 
 export const Route = createFileRoute("/")({
@@ -28,13 +29,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const heroRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const fade = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
-
-  const signatures = MENU.filter((m) => m.signature);
 
   return (
     <>
@@ -175,15 +174,66 @@ function Index() {
           <h2 className="mt-4 font-display text-3xl sm:text-4xl">{t.home.signaturesTitle}</h2>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {signatures.map((item, i) => (
-            <Reveal key={item.id} delay={i * 0.07}>
-              <article className="glass group h-full rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1.5">
-                <h3 className="font-display text-xl leading-snug">{t.menu.items[item.id].name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {t.menu.items[item.id].description}
-                </p>
-                <p className="mt-4 text-sm text-accent">{menuPrice(item, t)}</p>
+        {/*
+          Le plat emblématique occupe toute la largeur : c'est celui que la
+          carte papier titre « L'incontournable de L'Albatros », et il porte le
+          prix le plus engageant de la maison. Le noyer parmi cinq cartes
+          identiques lui ferait perdre ce statut.
+        */}
+        <Reveal delay={0.06}>
+          <article className="glass relative mt-10 overflow-hidden rounded-3xl p-7 sm:p-10">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--lagoon)_30%,transparent),transparent_70%)] blur-2xl"
+            />
+            <p className="relative text-[10px] uppercase tracking-[0.32em] text-accent">
+              {t.home.mustTry}
+            </p>
+            <h3 className="relative mt-4 font-display text-3xl leading-tight sm:text-4xl">
+              {pick(HERO_DISH.name, locale)}
+            </h3>
+            {HERO_DISH.detail && (
+              <p className="relative mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                {HERO_DISH.detail}
+              </p>
+            )}
+            <p className="relative mt-6 flex items-baseline gap-2">
+              <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                {t.home.servedFrom}
+              </span>
+              <span className="font-display text-3xl text-accent">{HERO_DISH.price}</span>
+              <span className="text-xs text-muted-foreground">{t.menu.perPerson}</span>
+            </p>
+          </article>
+        </Reveal>
+
+        {/* Les autres signatures, dans la typographie de la carte. */}
+        <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {SIGNATURE_DISHES.map((dish, i) => (
+            <Reveal key={`${dish.name.fr}-${i}`} delay={0.08 + i * 0.05}>
+              <article className="glass group flex h-full flex-col rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1.5">
+                <h3 className="font-display text-xl leading-snug">{pick(dish.name, locale)}</h3>
+                {dish.detail && (
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    {dish.detail}
+                  </p>
+                )}
+                <div className="mt-auto flex items-baseline gap-2 pt-5">
+                  <span
+                    aria-hidden="true"
+                    className="h-px min-w-4 flex-1 translate-y-[-0.15em] bg-[radial-gradient(circle,color-mix(in_oklab,var(--teal)_45%,transparent)_1px,transparent_1.2px)] bg-[length:6px_2px] bg-repeat-x opacity-50 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+                  <span className="shrink-0 whitespace-nowrap">
+                    <span className="font-display text-lg text-accent">
+                      {dish.price ?? t.menu.onArrival}
+                    </span>
+                    {dish.unit === "per100g" && (
+                      <span className="ml-1 text-[11px] text-muted-foreground">
+                        {t.menu.per100g}
+                      </span>
+                    )}
+                  </span>
+                </div>
               </article>
             </Reveal>
           ))}

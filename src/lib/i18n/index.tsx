@@ -38,16 +38,6 @@ export function useI18n(): I18nValue {
   return useContext(I18nContext);
 }
 
-/**
- * Prix affiché d'un plat. Le montant n'est pas traduisible, mais « selon
- * arrivage » et « / 2 pers. » le sont : la composition vit donc ici plutôt
- * que dupliquée dans chaque page qui affiche la carte.
- */
-export function menuPrice(item: { price: string | null; priceNote?: "perTwo" }, t: Dict): string {
-  if (item.price === null) return t.menu.onRequest;
-  return item.priceNote ? `${item.price} ${t.menu[item.priceNote]}` : item.price;
-}
-
 export type { Dict };
 export { DEFAULT_LOCALE, isLocale };
 export type { Locale };

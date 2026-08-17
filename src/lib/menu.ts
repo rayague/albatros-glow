@@ -534,6 +534,22 @@ const boissons: Section[] = [
   },
 ];
 
+/**
+ * Le plat emblématique, celui que la carte papier titre « L'incontournable de
+ * L'Albatros ». Il ouvre la section signatures de l'accueil.
+ */
+export const HERO_DISH: Dish = SIGNATURES[0];
+
+/**
+ * Les autres pièces signature, pour l'accueil : les deux vendues au poids,
+ * puis celles marquées dans la carte cuisine. Dérivé plutôt que recopié —
+ * marquer `signature: true` sur un plat suffit à le faire apparaître.
+ */
+export const SIGNATURE_DISHES: Dish[] = [
+  ...SIGNATURES.slice(1),
+  ...cuisine.flatMap((s) => s.items.filter((i) => i.signature)),
+];
+
 export const CARTES: Carte[] = [
   { id: "cuisine", label: L("Cuisine", "Food", "Cucina"), sections: cuisine },
   { id: "vins", label: L("Vins", "Wines", "Vini"), sections: vins },

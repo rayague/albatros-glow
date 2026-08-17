@@ -72,6 +72,8 @@ export const it: Dict = {
     heroAlt: "La terrazza de L'Albatros di notte, di fronte alle vele del porto di Bonifacio",
     signaturesEyebrow: "I piatti firma",
     signaturesTitle: "Da non perdere",
+    mustTry: "L'immancabile de L'Albatros",
+    servedFrom: "A partire da",
     seeFullMenu: "Vedi tutto il menu",
     imagesEyebrow: "In immagini",
     imagesTitle: "La casa in immagini",
@@ -90,11 +92,6 @@ export const it: Dict = {
     introBefore:
       "Il menu segue il pescato e il mercato. Alcuni piatti — aragosta, bouillabaisse — vanno ordinati in anticipo al ",
     introAfter: ".",
-    filterAria: "Filtra per categoria",
-    filterAll: "Tutto",
-    signature: "Firma",
-    onRequest: "Secondo il pescato",
-    perTwo: "/ 2 persone",
     allergens:
       "Allergeni: l'elenco completo degli allergeni presenti nelle nostre preparazioni è disponibile in sala, basta chiederlo a un membro del nostro team.",
     carteAria: "Scegli un menu",
@@ -104,54 +101,6 @@ export const it: Dict = {
     chefNote:
       "Il nostro chef propone un menu ispirato al mercato e alla stagionalità, costruito soprattutto su prodotti freschi e locali.",
     tableService: "Sfilettato e servito in sala",
-    categories: {
-      Entrées: "Antipasti",
-      Poissons: "Pesce",
-      Viandes: "Carni",
-      Desserts: "Dolci",
-    },
-    items: {
-      soupe: {
-        name: "Zuppa di pesce di scoglio",
-        description: "Rouille della casa, crostini dorati, tomme corsa grattugiata.",
-      },
-      tartare: {
-        name: "Tartare di pesce",
-        description: "Pescato del giorno, olio d'oliva della Balagne, agrumi, erbe fresche.",
-      },
-      fritto: {
-        name: "Fritto misto",
-        description: "Frittura leggera di pesciolini e calamari, limone candito.",
-      },
-      pecheDuJour: {
-        name: "Pesce fresco del pescato locale del giorno",
-        description: "Intero o in filetto, grigliato alla brace, verdure di stagione dell'orto.",
-      },
-      bouillabaisse: {
-        name: "Bouillabaisse della casa",
-        description: "Su ordinazione, per due persone. Pesce di scoglio, zafferano, rouille.",
-      },
-      thon: {
-        name: "Tonno scottato",
-        description: "Cuore rosato, sesamo, emulsione alle erbe della macchia.",
-      },
-      langouste: {
-        name: "Aragosta",
-        description: "Grigliata o in insalata, secondo il pescato del giorno.",
-      },
-      veau: {
-        name: "Spezzatino di vitello alle olive",
-        description: "Vitello corso brasato, olive del Mediterraneo, polenta cremosa.",
-      },
-      moelleux: {
-        name: "Tortino di castagne",
-        description: "Farina di castagne corse, cuore morbido, crema di brocciu.",
-      },
-      fiadone: {
-        name: "Fiadone",
-        description: "Brocciu fresco, scorza di limone, acquavite corsa.",
-      },
-    },
   },
 
   team: {

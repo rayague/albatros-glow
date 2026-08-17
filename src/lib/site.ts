@@ -76,56 +76,6 @@ export const LEGAL = {
   updatedAt: "2026-08-06",
 } as const;
 
-export type MenuCategory = "Entrées" | "Poissons" | "Viandes" | "Desserts";
-
-/**
- * Les libellés (nom, description) vivent dans les dictionnaires de traduction,
- * repérés par `id`. Ne restent ici que les données non traduisibles : prix,
- * catégorie, mise en avant.
- */
-export type MenuItemId =
-  | "soupe"
-  | "tartare"
-  | "fritto"
-  | "pecheDuJour"
-  | "bouillabaisse"
-  | "thon"
-  | "langouste"
-  | "veau"
-  | "moelleux"
-  | "fiadone";
-
-export type MenuItem = {
-  id: MenuItemId;
-  /** Montant affiché tel quel, ou `null` lorsque le prix dépend de l'arrivage. */
-  price: string | null;
-  /** Mention traduite accolée au montant, ex. « / 2 pers. ». */
-  priceNote?: "perTwo";
-  category: MenuCategory;
-  signature?: boolean;
-};
-
-export const MENU: MenuItem[] = [
-  { id: "soupe", price: "16 €", category: "Entrées", signature: true },
-  { id: "tartare", price: "22 €", category: "Entrées" },
-  { id: "fritto", price: "19 €", category: "Entrées" },
-  { id: "pecheDuJour", price: null, category: "Poissons", signature: true },
-  {
-    id: "bouillabaisse",
-    price: "78 €",
-    priceNote: "perTwo",
-    category: "Poissons",
-    signature: true,
-  },
-  { id: "thon", price: "28 €", category: "Poissons" },
-  { id: "langouste", price: null, category: "Poissons" },
-  { id: "veau", price: "26 €", category: "Viandes" },
-  { id: "moelleux", price: "11 €", category: "Desserts", signature: true },
-  { id: "fiadone", price: "10 €", category: "Desserts" },
-];
-
-export const CATEGORIES: MenuCategory[] = ["Entrées", "Poissons", "Viandes", "Desserts"];
-
 /*
  * L'équipe est présentée par poste, sans nom propre : le personnel change
  * souvent, et un nom figé sur le site devient faux en quelques mois. Le

@@ -73,6 +73,8 @@ export const en: Dict = {
     heroAlt: "The terrace of L'Albatros at night, facing the yachts of Bonifacio harbour",
     signaturesEyebrow: "Signature dishes",
     signaturesTitle: "What not to miss",
+    mustTry: "The one dish not to miss",
+    servedFrom: "From",
     seeFullMenu: "See the full menu",
     imagesEyebrow: "In pictures",
     imagesTitle: "The house in pictures",
@@ -90,11 +92,6 @@ export const en: Dict = {
     introBefore:
       "The menu follows the catch and the market. Some dishes — spiny lobster, bouillabaisse — must be ordered in advance on ",
     introAfter: ".",
-    filterAria: "Filter by category",
-    filterAll: "All",
-    signature: "Signature",
-    onRequest: "Depending on the catch",
-    perTwo: "/ 2 people",
     allergens:
       "Allergens: the full list of allergens present in our dishes is available in the restaurant, simply ask a member of our team.",
     carteAria: "Choose a menu",
@@ -104,54 +101,6 @@ export const en: Dict = {
     chefNote:
       "Our chef offers a menu inspired by the market and the seasons, built above all on fresh, local produce.",
     tableService: "Carved and served at your table",
-    categories: {
-      Entrées: "Starters",
-      Poissons: "Fish",
-      Viandes: "Meat",
-      Desserts: "Desserts",
-    },
-    items: {
-      soupe: {
-        name: "Rockfish soup",
-        description: "House rouille, golden croûtons, grated Corsican tomme.",
-      },
-      tartare: {
-        name: "Fish tartare",
-        description: "Catch of the day, Balagne olive oil, citrus, fresh herbs.",
-      },
-      fritto: {
-        name: "Fritto misto",
-        description: "Lightly fried small fish and squid, preserved lemon.",
-      },
-      pecheDuJour: {
-        name: "Fresh fish from the day's local catch",
-        description: "Whole or filleted, fire-grilled, seasonal vegetables from the market garden.",
-      },
-      bouillabaisse: {
-        name: "House bouillabaisse",
-        description: "To order, for two. Rockfish, saffron, rouille.",
-      },
-      thon: {
-        name: "Seared tuna",
-        description: "Pink centre, sesame, emulsion of maquis herbs.",
-      },
-      langouste: {
-        name: "Spiny lobster",
-        description: "Grilled or in a salad, depending on the day's catch.",
-      },
-      veau: {
-        name: "Veal sauté with olives",
-        description: "Slow-cooked Corsican veal, Mediterranean olives, creamy polenta.",
-      },
-      moelleux: {
-        name: "Chestnut fondant",
-        description: "Corsican chestnut flour, molten centre, brocciu cream.",
-      },
-      fiadone: {
-        name: "Fiadone",
-        description: "Fresh brocciu, lemon zest, Corsican eau-de-vie.",
-      },
-    },
   },
 
   team: {

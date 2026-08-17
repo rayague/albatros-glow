@@ -76,6 +76,8 @@ export const fr = {
     heroAlt: "Terrasse de L'Albatros la nuit face aux voiliers du port de Bonifacio",
     signaturesEyebrow: "Les signatures",
     signaturesTitle: "Ce qu'il ne faut pas manquer",
+    mustTry: "L'incontournable de L'Albatros",
+    servedFrom: "Servi à partir de",
     seeFullMenu: "Voir toute la carte",
     imagesEyebrow: "En images",
     imagesTitle: "La maison en images",
@@ -94,11 +96,6 @@ export const fr = {
     introBefore:
       "La carte évolue au rythme de la pêche et du marché. Certaines pièces — langouste, bouillabaisse — se commandent à l'avance au ",
     introAfter: ".",
-    filterAria: "Filtrer par catégorie",
-    filterAll: "Tout",
-    signature: "Signature",
-    onRequest: "Selon arrivage",
-    perTwo: "/ 2 pers.",
     allergens:
       "Allergènes : la liste complète des allergènes présents dans nos préparations est disponible en salle sur simple demande auprès de notre équipe.",
     carteAria: "Choisir une carte",
@@ -108,54 +105,6 @@ export const fr = {
     chefNote:
       "Notre chef propose une carte inspirée du marché et de la saisonnalité, élaborée essentiellement à base de produits frais et locaux.",
     tableService: "Découpé et servi en salle",
-    categories: {
-      Entrées: "Entrées",
-      Poissons: "Poissons",
-      Viandes: "Viandes",
-      Desserts: "Desserts",
-    },
-    items: {
-      soupe: {
-        name: "Soupe de poissons de roche",
-        description: "Rouille maison, croûtons dorés, tomme corse râpée.",
-      },
-      tartare: {
-        name: "Tartare de poisson",
-        description: "Pêche du jour, huile d'olive de Balagne, agrumes, herbes fraîches.",
-      },
-      fritto: {
-        name: "Fritto misto",
-        description: "Friture légère de petits poissons et calamars, citron confit.",
-      },
-      pecheDuJour: {
-        name: "Poisson frais de la pêche locale du jour",
-        description: "Entier ou en filet, grillé au feu, légumes de saison du maraîcher.",
-      },
-      bouillabaisse: {
-        name: "Bouillabaisse maison",
-        description: "Sur commande, pour 2 personnes. Poissons de roche, safran, rouille.",
-      },
-      thon: {
-        name: "Thon snacké",
-        description: "Cœur rosé, sésame, émulsion aux herbes du maquis.",
-      },
-      langouste: {
-        name: "Langouste",
-        description: "Grillée ou en salade, selon la pêche du jour.",
-      },
-      veau: {
-        name: "Sauté de veau aux olives",
-        description: "Veau corse mijoté, olives de Méditerranée, polenta crémeuse.",
-      },
-      moelleux: {
-        name: "Moelleux à la châtaigne",
-        description: "Farine de châtaigne corse, cœur coulant, crème de brocciu.",
-      },
-      fiadone: {
-        name: "Fiadone",
-        description: "Brocciu frais, zeste de citron, eau-de-vie corse.",
-      },
-    },
   },
 
   team: {
