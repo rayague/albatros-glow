@@ -17,6 +17,7 @@ import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Preloader } from "@/components/Preloader";
+import { SITE_URL } from "@/lib/site";
 import { I18nProvider, dictFor, normalizeLangParam, useI18n } from "@/lib/i18n";
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, type Locale } from "@/lib/i18n/locales";
 
@@ -119,8 +120,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "author", content: "L'Albatros — Bonifacio" },
         { property: "og:type", content: "website" },
         { property: "og:locale", content: meta.htmlLang.replace("-", "_") },
+        { property: "og:site_name", content: "L'Albatros" },
+        /*
+         * Image de partage. Servie depuis /public, donc à une URL stable — un
+         * fichier importé par Vite recevrait une empreinte à chaque build, et
+         * les réseaux sociaux gardent l'ancienne en cache.
+         *
+         * C'est la photo du port, volontairement sans texte incrusté : le site
+         * est en trois langues, une accroche gravée dans l'image serait fausse
+         * pour deux visiteurs sur trois.
+         */
+        { property: "og:image", content: `${SITE_URL}/og-albatros.jpg` },
+        { property: "og:image:width", content: "1920" },
+        { property: "og:image:height", content: "1280" },
+        { property: "og:image:type", content: "image/jpeg" },
+        { property: "og:image:alt", content: t.home.heroAlt },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "theme-color", content: "#F4FCFC" },
+        { name: "twitter:image", content: `${SITE_URL}/og-albatros.jpg` },
+        { name: "theme-color", content: "#F4FCFD" },
       ],
       links: [
         { rel: "stylesheet", href: appCss },
@@ -130,7 +147,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap",
         },
-        { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+        /*
+         * Le logo fait 118 x 112 px. C'est suffisant pour l'onglet du
+         * navigateur (16 à 48 px), donc il est déclaré en premier et prime sur
+         * le favicon.ico hérité du gabarit de départ.
+         *
+         * `apple-touch-icon` attend 180 px et le manifeste 512 : ces tailles ne
+         * sont volontairement PAS déclarées, un logo étiré y serait flou. À
+         * ajouter dès réception du fichier vectoriel.
+         */
+        { rel: "icon", href: "/logo-albatros.png", type: "image/png", sizes: "118x112" },
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
         // Déclare les versions traduites aux moteurs de recherche.
         ...LOCALES.map((l) => ({
           rel: "alternate",

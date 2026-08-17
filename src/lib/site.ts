@@ -23,6 +23,20 @@ export type PaymentId = (typeof PAYMENTS)[number];
 /** Coordonnées du restaurant, pour les données structurées et le plan. */
 export const GEO = { lat: 41.3885, lon: 9.1585 } as const;
 
+/**
+ * Adresse publique du site, sans barre oblique finale.
+ *
+ * Les réseaux sociaux exigent une URL ABSOLUE pour l'image de partage : une
+ * URL relative n'est pas résolue par leurs robots. Tant que le domaine
+ * définitif n'est pas connu, la valeur reste vide et l'URL produite est
+ * relative — imparfait, mais préférable à un domaine inventé qui donnerait une
+ * image cassée sur toutes les publications.
+ *
+ * À renseigner via VITE_SITE_URL dans les variables d'environnement du
+ * déploiement, par exemple https://albatros.vercel.app (voir .env.example).
+ */
+export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? "").replace(/\/+$/, "");
+
 /*
  * Informations des mentions légales.
  *
