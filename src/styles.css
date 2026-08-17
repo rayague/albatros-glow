@@ -51,10 +51,6 @@
   --color-deep: var(--deep);
   --color-ink: var(--ink);
   --color-teal: var(--teal);
-  --color-sand: var(--sand);
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --color-coral: var(--coral);
 }
 
 :root {
@@ -62,20 +58,21 @@
 
   /*
    * Palette de marque — "Lagon".
-   * Toutes les chromas sont calées sur le maximum affichable en sRGB pour la
-   * paire (clarté, teinte) : au-delà, le navigateur écrête et la couleur rendue
-   * n'est plus celle sur laquelle les contrastes ont été calculés.
+   *
+   * Toute la palette est calée sur la teinte 207, prélevée pixel par pixel dans
+   * le logo officiel (turquoise dominant #45ABB8, 72 % des pixels opaques).
+   *
+   * Le logo ne contient que deux couleurs et aucune ne peut porter de texte :
+   * son turquoise plafonne à 2.70:1 sur blanc, son blanc cassé à 1.10:1. Un site
+   * limité à ces deux valeurs serait illisible. On garde donc la teinte — c'est
+   * elle, l'identité — et on en dérive une échelle de clartés accessible.
    */
-  --shell: oklch(0.985 0.008 195); /* #F4FCFC — nacre, fond haut de page */
-  --foam: oklch(0.945 0.032 195); /* #D5F4F3 — écume, fond bas de page */
-  --lagoon: oklch(0.72 0.122 200); /* #04BBC3 — turquoise piscine, décoratif */
-  --deep: oklch(0.32 0.06 225); /* #01394A — eau profonde, voile du hero */
-  --ink: oklch(0.26 0.051 228); /* #002837 — texte courant */
-  --teal: oklch(0.5 0.086 210); /* #02707E — accent porteur de texte */
-  --sand: oklch(0.9 0.035 85); /* #E9DDC4 — sable */
-  --gold: oklch(0.7 0.11 84); /* #BF9846 */
-  --gold-light: oklch(0.82 0.09 88); /* #DCC17F */
-  --coral: oklch(0.55 0.15 32); /* #B94834 */
+  --lagoon: oklch(0.687 0.095 207); /* #45ABB8 — LE turquoise du logo, décoratif */
+  --shell: oklch(0.985 0.008 207); /* #F4FCFD — nacre, fond haut de page */
+  --foam: oklch(0.945 0.03 207); /* #D7F3F7 — écume, fond bas de page */
+  --deep: oklch(0.32 0.055 207); /* #003A41 — eau profonde, voile du hero */
+  --ink: oklch(0.26 0.044 207); /* #012A2F — texte courant */
+  --teal: oklch(0.5 0.085 207); /* #03707C — accent porteur de texte */
 
   --background: var(--shell);
   --foreground: var(--ink);
@@ -83,25 +80,25 @@
   --card-foreground: var(--ink);
   --popover: oklch(1 0 0);
   --popover-foreground: var(--ink);
-  --primary: oklch(0.52 0.088 205); /* #047781 — blanc dessus : 5.21:1 */
-  --primary-foreground: oklch(0.995 0.002 190);
-  --secondary: oklch(0.9 0.045 197);
+  --primary: oklch(0.52 0.089 207); /* #017783 — blanc dessus : 5.23:1 */
+  --primary-foreground: oklch(0.995 0.002 207);
+  --secondary: oklch(0.9 0.045 207);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.93 0.03 197);
-  --muted-foreground: oklch(0.46 0.035 222); /* 6.76:1 sur nacre */
+  --muted: oklch(0.93 0.03 207);
+  --muted-foreground: oklch(0.46 0.035 207); /* 6.74:1 sur nacre */
   /*
-   * L'or ne peut pas porter de texte sur fond clair : 2.58:1 au mieux. L'accent
-   * devient donc le turquoise sombre (5.56:1), et l'or ne subsiste que sur les
-   * surfaces sombres (hero) et les filets purement décoratifs.
+   * Le turquoise du logo plafonne à 2.70:1 sur fond clair : il ne peut donc pas
+   * porter de texte. L'accent est sa déclinaison foncée, à la même teinte
+   * (5.55:1), et le turquoise d'origine reste réservé au décor et aux aplats.
    */
   --accent: var(--teal);
-  --accent-foreground: oklch(0.995 0.002 190);
+  --accent-foreground: oklch(0.995 0.002 207);
   --destructive: oklch(0.52 0.17 27);
-  --destructive-foreground: oklch(0.995 0.002 190);
+  --destructive-foreground: oklch(0.995 0.002 207);
   /* Sur fond clair, --destructive passe déjà le seuil texte : 5.93:1. */
   --destructive-text: var(--destructive);
-  --border: oklch(0.26 0.051 228 / 14%);
-  --input: oklch(0.26 0.051 228 / 22%);
+  --border: oklch(0.26 0.044 207 / 14%);
+  --input: oklch(0.26 0.044 207 / 22%);
   --ring: var(--teal);
 
   /* Surfaces glass, désormais claires sur fond clair */
@@ -131,15 +128,17 @@
    * en encre très diluée et l'ombre prend la teinte de l'eau profonde.
    */
   --glass-border: rgba(255, 255, 255, 0.75);
-  --glass-edge: rgba(1, 57, 74, 0.1);
-  --glass-shadow: 0 22px 48px -22px rgba(1, 57, 74, 0.35);
+  --glass-edge: rgba(0, 58, 65, 0.1);
+  --glass-shadow: 0 22px 48px -22px rgba(0, 58, 65, 0.35);
 
-  --gradient-gold: linear-gradient(120deg, var(--gold), var(--gold-light));
-  /* CTA : assez sombre pour porter du texte blanc (5.21:1). */
+  /* CTA : assez sombre pour porter du texte blanc (5.23:1). */
   --gradient-cta: linear-gradient(140deg, var(--primary), var(--teal));
   /* Décoratif uniquement : trop clair pour du texte blanc. */
   --gradient-lagoon: linear-gradient(140deg, var(--lagoon), var(--primary));
+  /* Logotype sur fond clair : encre → turquoise foncé, 5.55:1 au bout le plus pâle. */
   --gradient-sea: linear-gradient(120deg, var(--ink), var(--teal));
+  /* Logotype sur fond sombre (preloader) : écume → turquoise du logo. */
+  --gradient-surf: linear-gradient(120deg, var(--foam), var(--lagoon));
   /* Fond de page : nacre en haut, écume en bas — la lumière traverse l'eau. */
   --gradient-shallows: linear-gradient(170deg, var(--shell) 0%, var(--shell) 28%, var(--foam) 100%);
   /* Voile du hero : eau profonde en haut pour la lisibilité, dissous vers la page. */
@@ -231,7 +230,7 @@
 
 /* Logotype sur surface SOMBRE uniquement (preloader, voile du hero). */
 @utility text-gold-gradient {
-  background: var(--gradient-gold);
+  background: var(--gradient-surf);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

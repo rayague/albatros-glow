@@ -15,6 +15,7 @@ export const it: Dict = {
     callAria: (phone: string) => `Chiama il ristorante al ${phone}`,
     skipToContent: "Vai al contenuto",
     homeAria: "L'Albatros — home",
+    logoAlt: "Logo del ristorante L'Albatros, Bonifacio",
   },
 
   meta: {

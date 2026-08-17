@@ -19,6 +19,7 @@ export const fr = {
     callAria: (phone: string) => `Appeler le restaurant au ${phone}`,
     skipToContent: "Aller au contenu",
     homeAria: "L'Albatros — accueil",
+    logoAlt: "Logo du restaurant L'Albatros, Bonifacio",
   },
 
   meta: {

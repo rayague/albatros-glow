@@ -70,7 +70,7 @@ function Index() {
             des couleurs claires explicites, au lieu des tokens `accent` et
             `muted-foreground` qui sont sombres depuis le passage en palette claire.
           */}
-          <p className="text-[10px] uppercase tracking-[0.36em] text-sand sm:text-[11px] sm:tracking-[0.42em]">
+          <p className="text-[10px] uppercase tracking-[0.36em] text-foam sm:text-[11px] sm:tracking-[0.42em]">
             {t.home.eyebrow}
           </p>
           {/*
@@ -85,11 +85,16 @@ function Index() {
           <p className="mt-4 max-w-xl text-balance text-sm leading-relaxed text-foam [@media(max-height:480px)]:hidden sm:mt-6 sm:text-base">
             {t.home.intro}
           </p>
+          {/*
+            Le turquoise du logo n'est qu'à 2.69:1 contre le voile du hero : seul,
+            le contour du bouton serait imperceptible. Le liseré d'écume (6.24:1)
+            définit sa limite, et l'encre dessus tient 5.67:1.
+          */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-9">
             <Link
               to="/reserver"
               data-magnetic
-              className="group inline-flex items-center gap-2 rounded-full bg-lagoon px-7 py-3.5 text-sm font-medium text-ink transition-transform duration-300 hover:scale-[1.04]"
+              className="group inline-flex items-center gap-2 rounded-full border-2 border-foam bg-lagoon px-7 py-3.5 text-sm font-medium text-ink transition-transform duration-300 hover:scale-[1.04]"
             >
               {t.home.ctaBook}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { CalendarHeart, Home, Images, Phone, UtensilsCrossed } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SITE } from "@/lib/site";
+import { Logo } from "@/components/Logo";
 import { useI18n, type Dict } from "@/lib/i18n";
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META } from "@/lib/i18n/locales";
 
@@ -78,7 +79,8 @@ export function SiteNav() {
           aria-label={t.nav.mainNavAria}
           className="relative mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4"
         >
-          <Link to="/" className="min-w-0">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
+            <Logo size="md" />
             <span className="font-display text-xl tracking-[0.16em] text-sea-gradient">
               {t.nav.brand}
             </span>
@@ -138,12 +140,19 @@ export function SiteNav() {
             }`}
           />
           <div className="relative flex items-center justify-between gap-3 px-4 py-2.5">
-            <Link to="/" className="min-w-0 leading-none" aria-label={t.nav.homeAria}>
-              <span className="font-display text-base tracking-[0.18em] text-sea-gradient">
-                {t.nav.brand}
-              </span>
-              <span className="mt-1 block text-[8px] uppercase tracking-[0.34em] text-muted-foreground">
-                {t.nav.city}
+            <Link
+              to="/"
+              className="flex min-w-0 items-center gap-2.5 leading-none"
+              aria-label={t.nav.homeAria}
+            >
+              <Logo size="sm" />
+              <span className="min-w-0">
+                <span className="block font-display text-base tracking-[0.18em] text-sea-gradient">
+                  {t.nav.brand}
+                </span>
+                <span className="mt-1 block text-[8px] uppercase tracking-[0.34em] text-muted-foreground">
+                  {t.nav.city}
+                </span>
               </span>
             </Link>
 
@@ -163,7 +172,7 @@ export function SiteNav() {
 
       {/* ─────────────  Mobile : dock flottant  ───────────── */}
       <nav
-        aria-label="Navigation principale"
+        aria-label={t.nav.mainNavAria}
         className="fixed inset-x-0 bottom-0 z-50 lg:hidden"
         style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
       >

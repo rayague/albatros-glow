@@ -18,6 +18,7 @@ export const en: Dict = {
     callAria: (phone: string) => `Call the restaurant on ${phone}`,
     skipToContent: "Skip to content",
     homeAria: "L'Albatros — home",
+    logoAlt: "Logo of L'Albatros restaurant, Bonifacio",
   },
 
   meta: {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useI18n } from "@/lib/i18n";
+import { Logo } from "@/components/Logo";
 
 type Star = {
   x0: number;
@@ -168,12 +169,15 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     >
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0" />
       <div className="pointer-events-none absolute inset-x-0 bottom-[22%] flex flex-col items-center gap-3 text-center">
-        <p
-          className="font-display text-3xl tracking-[0.18em] text-gold-gradient transition-opacity duration-700 sm:text-4xl"
+        <div
+          className="flex flex-col items-center gap-3 transition-opacity duration-700"
           style={{ opacity: leaving ? 0 : 1 }}
         >
-          {t.nav.brand}
-        </p>
+          <Logo size="lg" />
+          <p className="font-display text-3xl tracking-[0.18em] text-gold-gradient sm:text-4xl">
+            {t.nav.brand}
+          </p>
+        </div>
         {/*
           Le preloader reste la « plongée » : c'est la seule surface sombre avec
           le hero, ses textes portent donc des couleurs claires explicites et non

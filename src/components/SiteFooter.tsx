@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, MapPin, Phone } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { useI18n } from "@/lib/i18n";
+import { Logo } from "@/components/Logo";
 
 export function SiteFooter() {
   const { t } = useI18n();
@@ -10,7 +11,12 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border bg-[color-mix(in_oklab,var(--foam)_80%,white)] pb-32 pt-14 lg:pb-14">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-display text-xl tracking-[0.16em] text-sea-gradient">{t.nav.brand}</p>
+          <div className="flex items-center gap-3">
+            <Logo size="md" />
+            <p className="font-display text-xl tracking-[0.16em] text-sea-gradient">
+              {t.nav.brand}
+            </p>
+          </div>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t.footer.tagline}</p>
         </div>
 
