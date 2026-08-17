@@ -189,6 +189,15 @@ export const it: Dict = {
     company: "Azienda",
     submit: "Invia la richiesta",
     sending: "Invio in corso…",
+    asideCallTitle: "Preferisci chiamare?",
+    asideCallText: "È il modo più diretto, soprattutto per il giorno stesso. Rispondiamo durante il servizio.",
+    asideKnowTitle: "Da ordinare in anticipo",
+    asideKnowText:
+      "La bouillabaisse della casa, presentata e sfilettata in sala, e l'aragosta. Segnalalo nella tua richiesta.",
+    asideNextTitle: "Cosa succede dopo",
+    asideNextText:
+      "La tua richiesta ci arriva subito. Ti richiamiamo per confermare il tavolo e l'orario — la prenotazione è definitiva solo dopo questa chiamata.",
+    formTitle: "La tua richiesta",
     privacy:
       "I tuoi dati servono unicamente a gestire la prenotazione e non vengono mai ceduti a terzi.",
     successTitle: "Richiesta registrata",

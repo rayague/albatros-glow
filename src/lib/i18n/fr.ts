@@ -193,6 +193,15 @@ export const fr = {
     company: "Société",
     submit: "Envoyer ma demande",
     sending: "Envoi en cours…",
+    asideCallTitle: "Vous préférez appeler ?",
+    asideCallText: "Le plus direct, surtout pour le jour même. Nous décrochons pendant le service.",
+    asideKnowTitle: "À commander à l'avance",
+    asideKnowText:
+      "La bouillabaisse maison, présentée et découpée en salle, ainsi que la langouste. Précisez-le dans votre demande.",
+    asideNextTitle: "Ensuite",
+    asideNextText:
+      "Votre demande nous parvient immédiatement. Nous vous rappelons pour confirmer la table et l'horaire — une réservation n'est ferme qu'après cet appel.",
+    formTitle: "Votre demande",
     privacy:
       "Vos données servent uniquement au traitement de la réservation et ne sont jamais cédées à des tiers.",
     successTitle: "Demande enregistrée",

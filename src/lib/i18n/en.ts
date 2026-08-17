@@ -189,6 +189,15 @@ export const en: Dict = {
     company: "Company",
     submit: "Send my request",
     sending: "Sending…",
+    asideCallTitle: "Would you rather call?",
+    asideCallText: "The quickest way, especially for the same day. We answer during service.",
+    asideKnowTitle: "To order in advance",
+    asideKnowText:
+      "The house bouillabaisse, presented and carved at your table, and the spiny lobster. Do mention it in your request.",
+    asideNextTitle: "What happens next",
+    asideNextText:
+      "Your request reaches us straight away. We call you back to confirm the table and the time — a booking is only firm after that call.",
+    formTitle: "Your request",
     privacy:
       "Your details are used solely to process your booking and are never passed on to third parties.",
     successTitle: "Request received",
