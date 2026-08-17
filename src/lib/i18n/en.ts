@@ -126,6 +126,7 @@ export const en: Dict = {
     title: "Gallery",
     enlarge: (alt: string) => `Enlarge: ${alt}`,
     photoOf: (n: number, total: number) => `Photo ${n} of ${total}`,
+    zoom: "Enlarge",
     close: "Close photo",
     previous: "Previous photo",
     next: "Next photo",
@@ -134,6 +135,14 @@ export const en: Dict = {
       rouget: "Fillet of red mullet in its saffron rockfish broth",
       langoustes: "Golden platter of spiny lobster, prawns and grilled mussels",
       terrasse: "Tables laid on the terrace at dusk, yachts moored in the background",
+    },
+    intro:
+      "Four images, taken from the terrace and in the kitchen. The harbour changes by the hour; the plate follows the morning's catch.",
+    titles: {
+      port: "The harbour, after dark",
+      rouget: "Red mullet, in saffron broth",
+      langoustes: "The spiny lobster platter",
+      terrasse: "The terrace, at dusk",
     },
   },
 
@@ -146,6 +155,19 @@ export const en: Dict = {
     call: "Call",
     directions: "Directions",
     portName: "Quai Comparetti — the marina",
+    intro:
+      "On the quayside, right at the water's edge, between the pontoons and the old town. A short walk from the marina, a few minutes from the harbour car park.",
+    addressLabel: "Address",
+    hoursLabel: "Opening hours",
+    hoursValue: "11am – 11pm",
+    hoursNote: "Continuous service, seven days a week",
+    seasonLabel: "Season",
+    phoneLabel: "Telephone",
+    phoneNote: "We answer during service",
+    paymentLabel: "Payment methods",
+    payments: { card: "Credit card", cash: "Cash", ancv: "ANCV holiday vouchers" },
+    followLabel: "Follow us",
+    mapCredit: "Base map © OpenStreetMap",
   },
 
   booking: {

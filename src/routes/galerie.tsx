@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 
 import { PHOTOS } from "@/lib/gallery";
 import { Reveal } from "@/components/Reveal";
@@ -71,12 +71,18 @@ function GaleriePage() {
       <Reveal>
         <p className="text-[11px] uppercase tracking-[0.36em] text-accent">{t.gallery.eyebrow}</p>
         <h1 className="mt-4 font-display text-4xl sm:text-5xl">{t.gallery.title}</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          {t.gallery.intro}
+        </p>
       </Reveal>
 
       {/*
         Colonnes maçonnées : chaque photo garde ses proportions d'origine et la
         grille encaisse n'importe quel nombre d'images. L'ancienne grille fixait
         les tailles par index — elle se serait cassée dès la cinquième photo.
+
+        Chaque vignette porte son titre : avec quatre images seulement, une
+        grille nue paraît maigre. Nommées, elles se lisent comme une série.
       */}
       <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
         {PHOTOS.map((p, i) => {
@@ -101,7 +107,29 @@ function GaleriePage() {
                 decoding="async"
                 className="w-full transition-transform duration-[1.2s] group-hover:scale-105"
               />
-              <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,color-mix(in_oklab,var(--deep)_55%,transparent))]" />
+              {/*
+                Fondu au-dessus du bandeau, pour que celui-ci ne coupe pas
+                l'image net. Purement décoratif : il ne porte aucun texte.
+              */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent,color-mix(in_oklab,var(--deep)_86%,transparent))]"
+              />
+              {/*
+                Le titre repose sur un bandeau d'opacité FIXE, et non sur un
+                point du dégradé : la densité du voile y dépendrait de la
+                hauteur de la tuile. Mesuré, le titre tombait à 1.64:1 sur une
+                zone claire de photo. À 86 %, il tient 8.0:1 au pire cas.
+              */}
+              <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-[color-mix(in_oklab,var(--deep)_86%,transparent)] p-5 text-left">
+                <span className="block font-display text-lg leading-snug text-shell">
+                  {t.gallery.titles[p.id]}
+                </span>
+                <span className="mt-1 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-foam opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <Maximize2 className="h-3 w-3" aria-hidden="true" />
+                  {t.gallery.zoom}
+                </span>
+              </span>
             </motion.button>
           );
         })}

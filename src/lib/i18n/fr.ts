@@ -130,6 +130,7 @@ export const fr = {
     title: "Galerie",
     enlarge: (alt: string) => `Agrandir : ${alt}`,
     photoOf: (n: number, total: number) => `Photo ${n} sur ${total}`,
+    zoom: "Agrandir",
     close: "Fermer la photo",
     previous: "Photo précédente",
     next: "Photo suivante",
@@ -138,6 +139,14 @@ export const fr = {
       rouget: "Filet de rouget dans son bouillon de poissons de roche safrané",
       langoustes: "Plateau doré de langoustes, gambas et moules grillées",
       terrasse: "Tables dressées en terrasse au crépuscule, yachts amarrés en arrière-plan",
+    },
+    intro:
+      "Quatre images, prises depuis la terrasse et en cuisine. Le port change d'heure en heure ; l'assiette, elle, suit la pêche du matin.",
+    titles: {
+      port: "Le port, à la nuit tombée",
+      rouget: "Le rouget, en bouillon safrané",
+      langoustes: "Le plateau de langoustes",
+      terrasse: "La terrasse, au crépuscule",
     },
   },
 
@@ -150,6 +159,19 @@ export const fr = {
     call: "Appeler",
     directions: "Itinéraire",
     portName: "Quai Comparetti — port de plaisance",
+    intro:
+      "Sur le quai, au ras de l'eau, entre les pontons et la vieille ville. On vient à pied depuis la marina, en quelques minutes depuis le parking du port.",
+    addressLabel: "Adresse",
+    hoursLabel: "Horaires",
+    hoursValue: "11h00 – 23h00",
+    hoursNote: "Service continu, 7 jours sur 7",
+    seasonLabel: "Saison",
+    phoneLabel: "Téléphone",
+    phoneNote: "Nous répondons pendant le service",
+    paymentLabel: "Moyens de paiement",
+    payments: { card: "Carte bancaire", cash: "Espèces", ancv: "Chèques-vacances ANCV" },
+    followLabel: "Nous suivre",
+    mapCredit: "Fond de plan © OpenStreetMap",
   },
 
   booking: {

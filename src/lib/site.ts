@@ -12,6 +12,17 @@ export const SITE = {
   maps: "https://www.google.com/maps/search/?api=1&query=47+Quai+Comparetti+20169+Bonifacio",
 } as const;
 
+/**
+ * Moyens de paiement, relevés sur la page WhatisEAT du restaurant : carte
+ * bancaire, espèces, chèques-vacances ANCV. L'étiquette est traduite, la clé
+ * ne l'est pas.
+ */
+export const PAYMENTS = ["card", "cash", "ancv"] as const;
+export type PaymentId = (typeof PAYMENTS)[number];
+
+/** Coordonnées du restaurant, pour les données structurées et le plan. */
+export const GEO = { lat: 41.3885, lon: 9.1585 } as const;
+
 /*
  * Informations des mentions légales.
  *

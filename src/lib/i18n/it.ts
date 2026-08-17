@@ -126,6 +126,7 @@ export const it: Dict = {
     title: "Galleria",
     enlarge: (alt: string) => `Ingrandisci: ${alt}`,
     photoOf: (n: number, total: number) => `Foto ${n} di ${total}`,
+    zoom: "Ingrandisci",
     close: "Chiudi la foto",
     previous: "Foto precedente",
     next: "Foto successiva",
@@ -134,6 +135,14 @@ export const it: Dict = {
       rouget: "Filetto di triglia nel suo brodo di pesce di scoglio allo zafferano",
       langoustes: "Piatto dorato di aragoste, gamberi e cozze grigliate",
       terrasse: "Tavoli apparecchiati in terrazza al tramonto, yacht ormeggiati sullo sfondo",
+    },
+    intro:
+      "Quattro immagini, dalla terrazza e dalla cucina. Il porto cambia di ora in ora; il piatto segue il pescato del mattino.",
+    titles: {
+      port: "Il porto, a notte fonda",
+      rouget: "La triglia, in brodo allo zafferano",
+      langoustes: "Il piatto di aragoste",
+      terrasse: "La terrazza, al tramonto",
     },
   },
 
@@ -146,6 +155,19 @@ export const it: Dict = {
     call: "Chiama",
     directions: "Itinerario",
     portName: "Quai Comparetti — porto turistico",
+    intro:
+      "Sulla banchina, a filo d'acqua, tra i pontili e la città vecchia. Ci si arriva a piedi dal porto turistico, in pochi minuti dal parcheggio del porto.",
+    addressLabel: "Indirizzo",
+    hoursLabel: "Orari",
+    hoursValue: "11:00 – 23:00",
+    hoursNote: "Servizio continuato, sette giorni su sette",
+    seasonLabel: "Stagione",
+    phoneLabel: "Telefono",
+    phoneNote: "Rispondiamo durante il servizio",
+    paymentLabel: "Metodi di pagamento",
+    payments: { card: "Carta di credito", cash: "Contanti", ancv: "Buoni vacanza ANCV" },
+    followLabel: "Seguici",
+    mapCredit: "Mappa di base © OpenStreetMap",
   },
 
   booking: {
