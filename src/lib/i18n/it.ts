@@ -22,7 +22,7 @@ export const it: Dict = {
     homeDescription:
       "Brasserie chic di fronte alle barche a vela del porto di Bonifacio: pescato del giorno, bouillabaisse della casa, tortino di castagne. Aperto tutti i giorni dalle 11 alle 23.",
     homeOgDescription:
-      "Terrazza riparata di fronte al porto turistico, cucina dello Chef Omar, prodotti freschi e filiera corta.",
+      "Terrazza riparata di fronte al porto turistico, cucina di stagione, prodotti freschi e filiera corta.",
     rootTitle: "L'Albatros — Ristorante sul porto di Bonifacio",
     rootDescription:
       "Brasserie chic di fronte alle barche a vela, 47 Quai Comparetti a Bonifacio. Pescato del giorno, bouillabaisse della casa, terrazza riparata, tutti i giorni dalle 11 alle 23.",
@@ -53,7 +53,7 @@ export const it: Dict = {
     eyebrow: "47 Quai Comparetti · Bonifacio",
     title: "Il Mediterraneo, servito davanti alle vele",
     intro:
-      "Brasserie chic sul porto turistico. Pescato locale del giorno, prodotti freschi e filiera corta, sotto la direzione dello Chef Omar.",
+      "Brasserie chic sul porto turistico. Pescato locale del giorno, prodotti freschi e filiera corta, preparati ogni giorno dalla nostra brigata.",
     ctaBook: "Prenota un tavolo",
     ctaMenu: "Scopri il menu",
     hours: "11 – 23, tutti i giorni",
@@ -63,7 +63,7 @@ export const it: Dict = {
     storyP1:
       "Sul Quai Comparetti, la terrazza riparata de L'Albatros guarda rientrare le barche a vela. Nel 2026 una nuova direzione riprende la casa senza cambiarne l'anima: prima il prodotto, poi il mare, sempre la generosità.",
     storyP2:
-      "Gli interni immaginati da Marie-Claire Luciani giocano sul blu e sull'oro — il mare e il tramonto sul porto. In cucina, lo Chef Omar lavora i territori corsi e mediterranei in filiera corta; in sala, Julien orchestra un servizio preciso e caloroso.",
+      "Gli interni giocano sul blu e sull'oro — il mare e il tramonto sul porto. In cucina, la brigata lavora i territori corsi e mediterranei in filiera corta; in sala, il team orchestra un servizio preciso e caloroso.",
     terraceBadge: "Terrazza riparata",
     terraceBadgeText: "Di fronte alle vele, servizio continuato dalle 11 alle 23.",
     terraceAlt:
@@ -95,7 +95,7 @@ export const it: Dict = {
     onRequest: "Secondo il pescato",
     perTwo: "/ 2 persone",
     allergens:
-      "Allergeni: l'elenco completo degli allergeni presenti nelle nostre preparazioni è disponibile in sala, basta chiederlo a Julien o al suo team.",
+      "Allergeni: l'elenco completo degli allergeni presenti nelle nostre preparazioni è disponibile in sala, basta chiederlo a un membro del nostro team.",
     categories: {
       Entrées: "Antipasti",
       Poissons: "Pesce",
@@ -147,17 +147,20 @@ export const it: Dict = {
   },
 
   team: {
-    omar: {
-      role: "Chef di cucina",
+    cuisine: {
+      title: "Lo chef di cucina",
+      role: "Ai fornelli",
       text: "Una cucina da brasserie chic, guidata dal pescato del mattino e dai territori corsi.",
     },
-    julien: {
-      role: "Maître",
-      text: "L'arte dell'accoglienza: un servizio preciso, caloroso, mai rigido.",
+    brigade: {
+      title: "La brigata",
+      role: "Sous-chef e commis",
+      text: "Una squadra affiatata che prepara e impiatta ogni portata sul posto, dal mattino all'ultimo servizio.",
     },
-    marieClaire: {
-      role: "Interni & atmosfera",
-      text: "Blu, ottone e luce del porto: una sala pensata come il ponte di una barca a vela.",
+    salle: {
+      title: "Il team di sala",
+      role: "Accoglienza & servizio",
+      text: "L'arte dell'accoglienza: un servizio preciso, caloroso, mai rigido, davanti alle vele.",
     },
   },
 

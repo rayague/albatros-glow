@@ -25,7 +25,7 @@ export const en: Dict = {
     homeDescription:
       "Chic brasserie facing the yachts of Bonifacio harbour: catch of the day, house bouillabaisse, Corsican chestnut fondant. Open daily, 11am to 11pm.",
     homeOgDescription:
-      "Sheltered terrace facing the marina, cooking by Chef Omar, fresh produce and short supply chains.",
+      "Sheltered terrace facing the marina, seasonal cooking, fresh produce and short supply chains.",
     rootTitle: "L'Albatros — Restaurant on Bonifacio harbour",
     rootDescription:
       "Chic brasserie facing the yachts, 47 Quai Comparetti in Bonifacio. Catch of the day, house bouillabaisse, sheltered terrace, daily 11am to 11pm.",
@@ -55,7 +55,7 @@ export const en: Dict = {
     eyebrow: "47 Quai Comparetti · Bonifacio",
     title: "The Mediterranean, served facing the yachts",
     intro:
-      "A chic brasserie on the marina. Local catch of the day, fresh produce and short supply chains, under the direction of Chef Omar.",
+      "A chic brasserie on the marina. Local catch of the day, fresh produce and short supply chains, prepared fresh each day by our kitchen team.",
     ctaBook: "Book a table",
     ctaMenu: "See the menu",
     hours: "11am – 11pm, daily",
@@ -65,7 +65,7 @@ export const en: Dict = {
     storyP1:
       "On Quai Comparetti, the sheltered terrace of L'Albatros watches the yachts come home. In 2026 new owners took over the house without changing its soul: produce first, the sea next, generosity always.",
     storyP2:
-      "The interior, designed by Marie-Claire Luciani, plays on blue and gold — the sea and the sunset over the marina. In the kitchen, Chef Omar works Corsican and Mediterranean produce through short supply chains; in the dining room, Julien runs a precise and warm service.",
+      "The interior plays on blue and gold — the sea and the sunset over the marina. In the kitchen, our team works Corsican and Mediterranean produce through short supply chains; in the dining room, the front-of-house runs a precise and warm service.",
     terraceBadge: "Sheltered terrace",
     terraceBadgeText: "Facing the yachts, continuous service from 11am to 11pm.",
     terraceAlt: "Tables laid on the terrace of L'Albatros at dusk, looking out over the marina",
@@ -95,7 +95,7 @@ export const en: Dict = {
     onRequest: "Depending on the catch",
     perTwo: "/ 2 people",
     allergens:
-      "Allergens: the full list of allergens present in our dishes is available in the restaurant, simply ask Julien or a member of the team.",
+      "Allergens: the full list of allergens present in our dishes is available in the restaurant, simply ask a member of our team.",
     categories: {
       Entrées: "Starters",
       Poissons: "Fish",
@@ -147,17 +147,20 @@ export const en: Dict = {
   },
 
   team: {
-    omar: {
-      role: "Head chef",
+    cuisine: {
+      title: "The head chef",
+      role: "At the stove",
       text: "Chic brasserie cooking, guided by the morning's catch and Corsican produce.",
     },
-    julien: {
-      role: "Maître d'hôtel",
-      text: "The art of welcoming: precise, warm service, never stiff.",
+    brigade: {
+      title: "The kitchen brigade",
+      role: "Sous-chef and commis",
+      text: "A tight-knit team preparing and plating every dish on site, from morning prep to the last service.",
     },
-    marieClaire: {
-      role: "Interior & atmosphere",
-      text: "Blue, brass and harbour light: a dining room conceived like a yacht's deck.",
+    salle: {
+      title: "The front-of-house team",
+      role: "Welcome & service",
+      text: "The art of welcoming: precise, warm service, never stiff, facing the yachts.",
     },
   },
 

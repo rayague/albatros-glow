@@ -256,7 +256,7 @@ function Index() {
                 <p className="text-[11px] uppercase tracking-[0.28em] text-accent">
                   {t.team[p.id].role}
                 </p>
-                <h3 className="mt-3 font-display text-2xl">{p.name}</h3>
+                <h3 className="mt-3 font-display text-2xl">{t.team[p.id].title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {t.team[p.id].text}
                 </p>

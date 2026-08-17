@@ -126,11 +126,14 @@ export const MENU: MenuItem[] = [
 
 export const CATEGORIES: MenuCategory[] = ["Entrées", "Poissons", "Viandes", "Desserts"];
 
-export type TeamMemberId = "omar" | "julien" | "marieClaire";
+/*
+ * L'équipe est présentée par poste, sans nom propre : le personnel change
+ * souvent, et un nom figé sur le site devient faux en quelques mois. Le
+ * constat est vérifiable — les annuaires en ligne citent aujourd'hui quatre
+ * chefs différents pour cet établissement.
+ *
+ * Intitulé, rôle et texte vivent tous dans les dictionnaires de traduction.
+ */
+export type TeamMemberId = "cuisine" | "brigade" | "salle";
 
-/** Les noms propres ne se traduisent pas ; rôle et texte viennent du dictionnaire. */
-export const TEAM: { id: TeamMemberId; name: string }[] = [
-  { id: "omar", name: "Chef Omar" },
-  { id: "julien", name: "Julien" },
-  { id: "marieClaire", name: "Marie-Claire Luciani" },
-];
+export const TEAM: { id: TeamMemberId }[] = [{ id: "cuisine" }, { id: "brigade" }, { id: "salle" }];

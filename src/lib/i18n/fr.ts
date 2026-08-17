@@ -26,7 +26,7 @@ export const fr = {
     homeDescription:
       "Brasserie chic face aux voiliers du port de Bonifacio : pêche du jour, bouillabaisse maison, moelleux à la châtaigne. Ouvert 7j/7 de 11h à 23h.",
     homeOgDescription:
-      "Terrasse abritée face à la marina, cuisine du Chef Omar, produits frais et circuits courts.",
+      "Terrasse abritée face à la marina, cuisine de saison, produits frais et circuits courts.",
     rootTitle: "L'Albatros — Restaurant sur le port de Bonifacio",
     rootDescription:
       "Brasserie chic face aux voiliers, 47 Quai Comparetti à Bonifacio. Pêche du jour, bouillabaisse maison, terrasse abritée, 7j/7 de 11h à 23h.",
@@ -58,7 +58,7 @@ export const fr = {
     eyebrow: "47 Quai Comparetti · Bonifacio",
     title: "La Méditerranée, servie face aux voiliers",
     intro:
-      "Brasserie chic sur le port de plaisance. Pêche locale du jour, produits frais et circuits courts, sous la direction du Chef Omar.",
+      "Brasserie chic sur le port de plaisance. Pêche locale du jour, produits frais et circuits courts, préparés chaque jour par notre brigade.",
     ctaBook: "Réserver une table",
     ctaMenu: "Découvrir la carte",
     hours: "11h – 23h, 7j/7",
@@ -68,7 +68,7 @@ export const fr = {
     storyP1:
       "Sur le quai Comparetti, la terrasse abritée de L'Albatros regarde les voiliers rentrer. En 2026, une nouvelle direction reprend la maison sans en changer l'âme : le produit d'abord, la mer ensuite, la générosité toujours.",
     storyP2:
-      "Le décor imaginé par Marie-Claire Luciani joue le bleu et l'or — la mer et le coucher de soleil sur la marina. En cuisine, le Chef Omar travaille les terroirs corses et méditerranéens en circuits courts ; en salle, Julien orchestre un service précis et chaleureux.",
+      "Le décor joue le bleu et l'or — la mer et le coucher de soleil sur la marina. En cuisine, la brigade travaille les terroirs corses et méditerranéens en circuits courts ; en salle, l'équipe orchestre un service précis et chaleureux.",
     terraceBadge: "Terrasse abritée",
     terraceBadgeText: "Face aux voiliers, service continu de 11h à 23h.",
     terraceAlt: "Tables dressées sur la terrasse de L'Albatros au crépuscule, vue sur la marina",
@@ -99,7 +99,7 @@ export const fr = {
     onRequest: "Selon arrivage",
     perTwo: "/ 2 pers.",
     allergens:
-      "Allergènes : la liste complète des allergènes présents dans nos préparations est disponible en salle sur simple demande auprès de Julien et de son équipe.",
+      "Allergènes : la liste complète des allergènes présents dans nos préparations est disponible en salle sur simple demande auprès de notre équipe.",
     categories: {
       Entrées: "Entrées",
       Poissons: "Poissons",
@@ -151,17 +151,20 @@ export const fr = {
   },
 
   team: {
-    omar: {
-      role: "Chef de cuisine",
+    cuisine: {
+      title: "Le chef de cuisine",
+      role: "Aux fourneaux",
       text: "Une cuisine de brasserie chic, guidée par la pêche du matin et les terroirs corses.",
     },
-    julien: {
-      role: "Maître d'hôtel",
-      text: "L'art d'accueillir : un service précis, chaleureux, jamais guindé.",
+    brigade: {
+      title: "La brigade",
+      role: "Second et commis",
+      text: "Une équipe resserrée qui prépare et dresse chaque assiette sur place, du matin au dernier service.",
     },
-    marieClaire: {
-      role: "Décoration & atmosphère",
-      text: "Bleu, laiton et lumière du port : une salle pensée comme un pont de voilier.",
+    salle: {
+      title: "L'équipe de salle",
+      role: "Accueil & service",
+      text: "L'art d'accueillir : un service précis, chaleureux, jamais guindé, face aux voiliers.",
     },
   },
 
